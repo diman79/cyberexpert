@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}403{% endblock %}
+{% block content  %}
+<div class="main_container">
+        <div class="main_item">
+                <img src="{% static 'errors/403.png' alt="Ошибка 403" title="Ошибка 403" %}">
+                <p>Вы не имеете достаточных прав для получения доступа к ресурсу по указанному маршруту <a href="#">{{ path }}</a> не существует</p>
+        </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content  %}
+<div class="main_container" xmlns="http://www.w3.org/1999/html">
+        <div class="main_item">
+            {% spaceless %}
+            <h3>{% block form_name %} Создание курса {% endblock %}</h3>
+            <form id="form" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <p><button type="submit">Создать</button></p>
+            </form>
+            {% endspaceless %}
+        </div>
+
+    </div>
+{% endblock %}
