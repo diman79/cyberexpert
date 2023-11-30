@@ -20,7 +20,7 @@ class RubrikaAdmin(admin.ModelAdmin):
 
 @admin.register(Statya)
 class StatyaAdmin(admin.ModelAdmin):
-    list_display = ('title', 'description', 'author', 'date', 'content', 'kartinka', )
+    list_display = ('title', 'description', 'author', 'date', 'content', 'kartinka', 'count_views', )
     search_fields = ('title', 'author', 'rubrika', 'description', )
 
     list_per_page = 5
@@ -32,7 +32,7 @@ class StatyaAdmin(admin.ModelAdmin):
 
 @admin.register(Utilita)
 class UtilitaAdmin(admin.ModelAdmin):
-    list_display = ('naim', 'description', 'author', )
+    list_display = ('naim', 'description', 'author', 'count_downloads', )
     search_fields = ('naim', 'description', 'author', )
 
     list_per_page = 5
