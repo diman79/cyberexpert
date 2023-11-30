@@ -42,6 +42,8 @@ class Statya(models.Model):
 
     kartinka = models.ImageField(verbose_name='Картинка', blank=True, upload_to=get_timestamp_path_user)
 
+    count_views = models.IntegerField(verbose_name='Счетчик просмотров', default=0)
+
     def get_author(self):
         return self.author
 
@@ -69,6 +71,8 @@ class Utilita(models.Model):
     file = models.FileField(verbose_name='Файл утилиты', blank=True, upload_to=get_timestamp_path_user)
 
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Автор загрузки утилиты')
+
+    count_downloads = models.IntegerField(verbose_name='Счетчик скачиваний утилиты', default=0)
 
     class Meta:
         verbose_name_plural = 'Утилиты'

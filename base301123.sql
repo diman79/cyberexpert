@@ -48,7 +48,7 @@ CREATE TABLE `auth_app_user` (
 
 LOCK TABLES `auth_app_user` WRITE;
 /*!40000 ALTER TABLE `auth_app_user` DISABLE KEYS */;
-INSERT INTO `auth_app_user` VALUES (1,'pbkdf2_sha256$600000$FiO0IE25Ys2t0VcGykkDPF$6hsYa7NNXwENWQNBxz3wGtW311Ldvl3TESq4BcWz5Hg=','2023-11-30 06:21:16.760514',1,'','',1,1,'2023-11-30 06:20:45.317053','sharonov-db@mail.ru','sharonov-db@mail.ru','1979-02-16','','');
+INSERT INTO `auth_app_user` VALUES (1,'pbkdf2_sha256$600000$FiO0IE25Ys2t0VcGykkDPF$6hsYa7NNXwENWQNBxz3wGtW311Ldvl3TESq4BcWz5Hg=','2023-11-30 15:54:26.233859',1,'','',1,1,'2023-11-30 06:20:45.317053','sharonov-db@mail.ru','sharonov-db@mail.ru','1979-02-16','','');
 /*!40000 ALTER TABLE `auth_app_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -287,7 +287,7 @@ CREATE TABLE `django_migrations` (
   `name` varchar(255) NOT NULL,
   `applied` datetime(6) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -296,7 +296,7 @@ CREATE TABLE `django_migrations` (
 
 LOCK TABLES `django_migrations` WRITE;
 /*!40000 ALTER TABLE `django_migrations` DISABLE KEYS */;
-INSERT INTO `django_migrations` VALUES (1,'contenttypes','0001_initial','2023-11-30 05:57:27.627689'),(2,'contenttypes','0002_remove_content_type_name','2023-11-30 05:57:27.721271'),(3,'auth','0001_initial','2023-11-30 05:57:28.042878'),(4,'auth','0002_alter_permission_name_max_length','2023-11-30 05:57:28.130381'),(5,'auth','0003_alter_user_email_max_length','2023-11-30 05:57:28.142498'),(6,'auth','0004_alter_user_username_opts','2023-11-30 05:57:28.152433'),(7,'auth','0005_alter_user_last_login_null','2023-11-30 05:57:28.165065'),(8,'auth','0006_require_contenttypes_0002','2023-11-30 05:57:28.170244'),(9,'auth','0007_alter_validators_add_error_messages','2023-11-30 05:57:28.188479'),(10,'auth','0008_alter_user_username_max_length','2023-11-30 05:57:28.212999'),(11,'auth','0009_alter_user_last_name_max_length','2023-11-30 05:57:28.234748'),(12,'auth','0010_alter_group_name_max_length','2023-11-30 05:57:28.276460'),(13,'auth','0011_update_proxy_permissions','2023-11-30 05:57:28.288429'),(14,'auth','0012_alter_user_first_name_max_length','2023-11-30 05:57:28.299725'),(15,'auth_app','0001_initial','2023-11-30 05:57:28.745380'),(16,'admin','0001_initial','2023-11-30 05:57:28.932158'),(17,'admin','0002_logentry_remove_auto_add','2023-11-30 05:57:28.948205'),(18,'admin','0003_logentry_add_action_flag_choices','2023-11-30 05:57:28.963717'),(19,'authtoken','0001_initial','2023-11-30 05:57:29.063915'),(20,'authtoken','0002_auto_20160226_1747','2023-11-30 05:57:29.101084'),(21,'authtoken','0003_tokenproxy','2023-11-30 05:57:29.107083'),(22,'sessions','0001_initial','2023-11-30 05:57:29.159819'),(23,'logica','0001_initial','2023-11-30 09:26:30.085409');
+INSERT INTO `django_migrations` VALUES (1,'contenttypes','0001_initial','2023-11-30 05:57:27.627689'),(2,'contenttypes','0002_remove_content_type_name','2023-11-30 05:57:27.721271'),(3,'auth','0001_initial','2023-11-30 05:57:28.042878'),(4,'auth','0002_alter_permission_name_max_length','2023-11-30 05:57:28.130381'),(5,'auth','0003_alter_user_email_max_length','2023-11-30 05:57:28.142498'),(6,'auth','0004_alter_user_username_opts','2023-11-30 05:57:28.152433'),(7,'auth','0005_alter_user_last_login_null','2023-11-30 05:57:28.165065'),(8,'auth','0006_require_contenttypes_0002','2023-11-30 05:57:28.170244'),(9,'auth','0007_alter_validators_add_error_messages','2023-11-30 05:57:28.188479'),(10,'auth','0008_alter_user_username_max_length','2023-11-30 05:57:28.212999'),(11,'auth','0009_alter_user_last_name_max_length','2023-11-30 05:57:28.234748'),(12,'auth','0010_alter_group_name_max_length','2023-11-30 05:57:28.276460'),(13,'auth','0011_update_proxy_permissions','2023-11-30 05:57:28.288429'),(14,'auth','0012_alter_user_first_name_max_length','2023-11-30 05:57:28.299725'),(15,'auth_app','0001_initial','2023-11-30 05:57:28.745380'),(16,'admin','0001_initial','2023-11-30 05:57:28.932158'),(17,'admin','0002_logentry_remove_auto_add','2023-11-30 05:57:28.948205'),(18,'admin','0003_logentry_add_action_flag_choices','2023-11-30 05:57:28.963717'),(19,'authtoken','0001_initial','2023-11-30 05:57:29.063915'),(20,'authtoken','0002_auto_20160226_1747','2023-11-30 05:57:29.101084'),(21,'authtoken','0003_tokenproxy','2023-11-30 05:57:29.107083'),(22,'sessions','0001_initial','2023-11-30 05:57:29.159819'),(23,'logica','0001_initial','2023-11-30 09:26:30.085409'),(24,'logica','0002_statya_count_views_utilita_count_downloads','2023-11-30 16:06:32.746445');
 /*!40000 ALTER TABLE `django_migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -427,6 +427,7 @@ CREATE TABLE `logica_statya` (
   `content` longtext,
   `kartinka` varchar(100) NOT NULL,
   `author_id` bigint NOT NULL,
+  `count_views` int NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `title` (`title`),
   KEY `logica_statya_author_id_cf786c63_fk_auth_app_user_id` (`author_id`),
@@ -456,6 +457,7 @@ CREATE TABLE `logica_utilita` (
   `description` longtext NOT NULL,
   `file` varchar(100) NOT NULL,
   `author_id` bigint NOT NULL,
+  `count_downloads` int NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `naim` (`naim`),
   KEY `logica_utilita_author_id_7fed4c20_fk_auth_app_user_id` (`author_id`),
@@ -509,4 +511,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-30 13:28:19
+-- Dump completed on 2023-11-30 20:07:23
