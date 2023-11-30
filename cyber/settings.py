@@ -210,6 +210,8 @@ MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
 
 AUTH_USER_MODEL = 'auth_app.User'
+
+
 LOGIN_URL = 'log_in'
 LOGIN_REDIRECT_URL = 'index'
 LOGOUT_URL = 'log_out'

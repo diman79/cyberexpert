@@ -6,4 +6,4 @@ from .models import User
 
 admin.site.register(User)
 
-admin.site.site_header = 'Learning Management System'
+admin.site.site_header = 'Cyber Expert'
