@@ -1,5 +1,5 @@
 """
-URL configuration for cyber project.
+URL configuration for LMS5_Project project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.2/topics/http/urls/
@@ -14,6 +14,9 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.contrib.auth.views import (LoginView, LogoutView, PasswordResetView,
+                                       PasswordResetDoneView, PasswordResetConfirmView,
+                                       PasswordResetCompleteView)
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
@@ -25,11 +28,14 @@ handler500 = "cyber.views.server_error"
 handler404 = "cyber.views.page_not_found"
 handler403 = "cyber.views.forbidden"
 
-
 urlpatterns = [
+    path('', include('auth_app.urls')),
     path('admin/', admin.site.urls),
+    path('auth/', include('auth_app.urls')),
+    # path('courses/', include('learning.urls')),
     path("__debug__/", include("debug_toolbar.urls")),
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
