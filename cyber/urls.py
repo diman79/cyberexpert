@@ -32,7 +32,7 @@ urlpatterns = [
     path('', include('auth_app.urls')),
     path('admin/', admin.site.urls),
     path('auth/', include('auth_app.urls')),
-    # path('courses/', include('learning.urls')),
+    path('statyas/', include('logica.urls')),
     path("__debug__/", include("debug_toolbar.urls")),
 ]
 

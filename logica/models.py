@@ -2,7 +2,7 @@ from django.conf import settings
 from django.db import models
 from django.shortcuts import reverse
 
-import logica
+
 from logica.functions import *
 # Create your models here.
 
@@ -34,11 +34,11 @@ class Statya(models.Model):
     rubrika = models.ManyToManyField(Rubrika, db_table='statya_rubrika',
                                      related_name='rubrika', verbose_name='Рубрика')
 
-    description = models.TextField(verbose_name='Описание статьи', null=False, blank=False, default='', max_length=500)
+    description = models.TextField(verbose_name='Описание статьи', null=False, blank=False, default='', max_length=200)
 
     date = models.DateField(verbose_name='Дата публикации')
 
-    content = models.TextField(verbose_name='Контент статьи', null=True, blank=True, default='', max_length=500)
+    content = models.TextField(verbose_name='Контент статьи', null=True, blank=True, default='', max_length=1000)
 
     kartinka = models.ImageField(verbose_name='Картинка', blank=True, upload_to=get_timestamp_path_user)
 
@@ -48,7 +48,7 @@ class Statya(models.Model):
         return self.author
 
     def __str__(self):
-        return f'Статья: {self.naim}. Дата публикации: {self.date}. Автор: {self.get_author()} Описание: {self.description}'
+        return f'Статья: {self.title}. Дата публикации: {self.date}. Автор: {self.get_author()} Описание: {self.description}'
 
     class Meta:
         verbose_name_plural = 'Статьи'

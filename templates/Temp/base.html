@@ -1,8 +1,5 @@
 <!DOCTYPE html>
 {% load static %}
-
-
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -16,7 +13,6 @@
     <script defer src="{% static 'script.js' %}"></script>
 </head>
 <body>
-
     <header style="color=#A9A9A9">
         <nav class="header_container">
             <div class="logo_container">
@@ -30,10 +26,9 @@
                 </div>
             </div>
             <div class="auth_container">
-
                 {% if user.is_authenticated %}
                     <div class="profile">
-                        <div><a href="#">{{ user.last_name }} {{ request.user.first_name }}</a></div>
+                        <div><a href="#">{{ user.last_name }} {{ user.first_name }}</a></div>
                         <div class="submenu_profile" style="display: none;">
                             <div>
                                <p><a class="fa fa-heart" href="{% url 'favourites' %}"> Избранное</a></p>
@@ -50,16 +45,13 @@
                     <div class="login"><a href="{% url 'log_in' %}" style="color: #000">Вход</a></div>
                     <div class="register"><a href="{% url 'register' %}" style="color: #fff">Регистрация</a></div>
                 {% endif %}
-
-
             </div>
         </nav>
-
     </header>
 
     <main>
-        {% block content %}
-        {% endblock %}
+    {% block content %}
+    {% endblock %}
     </main>
 
     <footer>

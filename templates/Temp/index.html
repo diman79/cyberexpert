@@ -1,13 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block content  %}
 
+{% block content %}
     <form id="form" method="get">
         {% csrf_token %}
-            {{form.as_p}}
+        {{ form }}
         <button type="submit">Получить</button>
     </form>
-
     <div class="statyas_container">
         {% now 'SHORT_DATETIME_FORMAT' %}
         {% for statya in statyas %}

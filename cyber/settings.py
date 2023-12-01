@@ -45,9 +45,6 @@ INSTALLED_APPS = [
     'logica.apps.LogicaConfig',
     'auth_app.apps.AuthAppConfig',
     'debug_toolbar',
-    # 'api',
-    'rest_framework',
-    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -63,27 +60,6 @@ MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
-
-REST_FRAMEWORK = {
-    'DEFAULT_RENDERER_CLASSES': [
-        'rest_framework.renderers.JSONRenderer',
-        'rest_framework.renderers.BrowsableAPIRenderer',
-    ],
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-    ],
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',
-    ],
-    'URL_FORMAT_OVERRIDE': 'to',
-    'FORMAT_SUFFIX_KWARG': 'to',
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 3,
-    'ORDERING_PARAM': 'order_by',
-    'DATE_INPUT_FORMATS': ["%d.%m.%Y",],
-    'DATE_FORMAT': '%d.%m.%Y',
-}
 
 # Session settings
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
@@ -111,15 +87,16 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.contrib.auth.context_processors.auth',
                 'auth_app.context_processors.global_context',
                 'django.template.context_processors.request',
                 'django.template.context_processors.static',
-                'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'cyber.wsgi.application'
 

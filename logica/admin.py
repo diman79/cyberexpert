@@ -21,7 +21,7 @@ class RubrikaAdmin(admin.ModelAdmin):
 @admin.register(Statya)
 class StatyaAdmin(admin.ModelAdmin):
     list_display = ('title', 'description', 'author', 'date', 'content', 'kartinka', 'count_views', )
-    search_fields = ('title', 'author', 'rubrika', 'description', )
+    search_fields = ('title', 'author', 'description', )
 
     list_per_page = 5
     actions_on_top = True
