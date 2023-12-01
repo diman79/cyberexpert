@@ -64,6 +64,12 @@ img {
     letter-spacing: .05em;
     opacity: 70%;
 }
+.order {
+display: inline-block;
+width: 100%;
+text-align: right или center
+}
+
 .role {
     font-family: "Nunito", Helvetica, Arial, sans-serif;
     font-style: italic;
@@ -166,6 +172,7 @@ input, textarea {
     outline: none;
     margin-bottom: 2%;
 }
+
 #form input, #form textarea {
     width: 92%;
     padding: 10px 5px 10px 32px;
@@ -176,7 +183,10 @@ input, textarea {
     border-radius: 3px;
 }
 #form input[type="checkbox"] {
-    width: 3%;
+    width: 50px;
+}
+#form input[type="select"] {
+    width: 150;
 }
 
 #form input:active,#form input:focus,

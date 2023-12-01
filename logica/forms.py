@@ -43,7 +43,7 @@ class StatyaForm(forms.ModelForm):
             return preview_data
 
 
-class FilterOrderByForm(forms.Form):
+class FilterOrderBySearchForm(forms.Form):
     CHOICES = (
         ('count_views', 'По возрастанию просмотров'),
         ('-count_views', 'По убыванию просмотров'),
@@ -51,30 +51,22 @@ class FilterOrderByForm(forms.Form):
 
     field_order = ['rub', 'search', ]
 
-    order = forms.ChoiceField(label='Порядок сортировки', label_suffix=':', choices=CHOICES, initial=CHOICES[0])
+    order = forms.ChoiceField(label='Порядок сортировки', label_suffix=':', choices=CHOICES, initial=CHOICES[0],
+                              widget=forms.Select(attrs={'onchange': 'submit();'}))
 
     CHOICES2 = []
 
     for elem in Rubrika.objects.all():
         CHOICES2.append((elem.naim, elem.naim))
 
-    rub = forms.ChoiceField(label='Рубрика', label_suffix=':',choices=CHOICES2, required=True, initial='')
+    rub = forms.ChoiceField(label='Рубрика', label_suffix=':',choices=CHOICES2, required=True, initial='',
+                            widget=forms.Select(attrs={'onchange': 'submit();'}))
 
     search = forms.CharField(label='Поиск', label_suffix=':', required=False,
-                             widget=TextInput(attrs={'placeholder': 'Введите запрос ...'}))
-
-
-class FilterRubrikaForm(forms.Form):
-
-    #search = forms.CharField(label='Поиск', label_suffix=':', required=False,
-     #                        widget=TextInput(attrs={'placeholder': 'Введите запрос ...'}))
-
-    CHOICES2 = []
-
-    for elem in Rubrika.objects.all():
-        CHOICES2.append((elem.naim, elem.naim))
-
-    rub = forms.ChoiceField(label='', choices=CHOICES2, initial=CHOICES2[0])
+                             widget=forms.TextInput(attrs={'onchange': 'submit();',
+                                                           'placeholder': 'Поиск ...',
+                                                           'rows': 20,
+                                                           'cols': 20}))
 
 
 class SettingForm(forms.Form):

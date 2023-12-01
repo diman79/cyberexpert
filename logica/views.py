@@ -12,7 +12,7 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, FormView
-from .forms import FilterRubrikaForm, FilterOrderByForm, StatyaForm
+from .forms import FilterOrderBySearchForm, StatyaForm
 from .models import *
 from django.db.models import Q, F, Count, Sum
 from django.db.models.signals import pre_save
@@ -24,15 +24,15 @@ class MainView(ListView, FormView):
     template_name = 'index.html'
     queryset = Statya.objects.all()
     context_object_name = 'statyas'
-    form_class = FilterOrderByForm
+    form_class = FilterOrderBySearchForm
 
     paginate_by = 4
 
-    #def get_context_data(self, **kwargs):
-     #   FilterRubrikaForm_ = FilterRubrikaForm(self.request.GET or None)
-      #  data = super().get_context_data(**kwargs)
-       # data['FilterRubrikaForm'] = FilterRubrikaForm_
-        #return data
+    def get_context_data(self, **kwargs):
+        rubriks = Rubrika.objects.all()
+        data = super().get_context_data(**kwargs)
+        data['rubriks'] = rubriks
+        return data
 
     def get_queryset(self):
         if 'statyas' in cache:

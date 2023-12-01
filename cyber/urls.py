@@ -29,7 +29,7 @@ handler404 = "cyber.views.page_not_found"
 handler403 = "cyber.views.forbidden"
 
 urlpatterns = [
-    path('', include('auth_app.urls')),
+    path('', include('logica.urls')),
     path('admin/', admin.site.urls),
     path('auth/', include('auth_app.urls')),
     path('statyas/', include('logica.urls')),

@@ -17,23 +17,40 @@
 </head>
 <body>
 
-    <header style="color=#A9A9A9">
+    <header style="color=#A9A9A9;">
         <nav class="header_container">
             <div class="logo_container">
                 <a class="logo" href="{% url 'index' %}">
                     {% static 'logo.png' as logo_url %}
                     <img src="{{ logo_url }}" alt="Лого сайта" title="Лого сайта"></a>
 
-                <div class="describer">
-                    <div class="title"><h2 translate="no">Codeexpert</h2></div>
+
+                <div class="describer" >
+                    <div class="title"><h2 translate="no">Codeexpert</h2> </div>
+
                     <div class="role">Статьи по информационной безопасности</div>
+
                 </div>
+
+                <div style="margin-left: 50px; display:inline-block;width: 550px; border: 1px solid gray; border-radius: 10px;">
+                    <form id="form" method="get" style="border: none;">
+                        {% csrf_token %}
+                        <div style="width: 265px;">{{form.search}}</div>
+                        Рубрика: {{form.rub}}
+                    </form>
+                </div>
+
+                <div style="margin-left: 20px; display:inline-block;">
+                    <div style="align: left; width: 600px; display:inline-block;"><button style="margin-left: 20px; font-size: .9em; border-radius: 50px;background-color: #fff;color: #444;">Утилиты</button>
+                    <button style="margin-left: 20px; margin-left: 50px; font-size: .9em; border-radius: 50px;background-color: #fff;color: #444; ">Статьи</button></div>
+                </div>
+
             </div>
             <div class="auth_container">
 
                 {% if user.is_authenticated %}
-                    <div class="profile">
-                        <div><a href="#">{{ user.last_name }} {{ request.user.first_name }}</a></div>
+                    <div class="profile" style="margin-left: 100px;">
+                        <div><a style="" href="#">{{ user.last_name }} {{ request.user.first_name }}</a></div>
                         <div class="submenu_profile" style="display: none;">
                             <div>
                                <p><a class="fa fa-heart" href="{% url 'favourites' %}"> Избранное</a></p>
@@ -46,7 +63,7 @@
                     </div>
 
                 {% else %}
-                    <div class="nav-toggle"><span></span></div>
+                    <div class="nav-toggle;" style="margin-left: 50px;"><span></span></div>
                     <div class="login"><a href="{% url 'log_in' %}" style="color: #000">Вход</a></div>
                     <div class="register"><a href="{% url 'register' %}" style="color: #fff">Регистрация</a></div>
                 {% endif %}
@@ -63,7 +80,7 @@
     </main>
 
     <footer>
-        <div class="footer_container">
+        <div class="footer_container" style="display:inline-block;">
             <div class="logo">
                 <div class="copyright-mark">
                     <p><img src="{% static 'logo.jpg' %}" alt="Лого сайта" title="Лого сайта"/>
@@ -71,10 +88,19 @@
                     </p>
                 </div>
 
+
                     <div>&copy; {{ CURRENT_YEAR }} Все права защищены</div>
 
             </div>
         </div>
+
+                <div style="margin-left: 50px; display:inline-block; margin-top: 5-px;">
+                    <form id="form" method="get" style="width: 400px; border: none; border-color: #A9A9A9;">
+                        {% csrf_token %}
+                            <div>Сортировка: {{form.order}}</div>
+                    </form>
+                </div>
+
     </footer>
 
 </body>

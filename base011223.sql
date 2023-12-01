@@ -48,7 +48,7 @@ CREATE TABLE `auth_app_user` (
 
 LOCK TABLES `auth_app_user` WRITE;
 /*!40000 ALTER TABLE `auth_app_user` DISABLE KEYS */;
-INSERT INTO `auth_app_user` VALUES (1,'pbkdf2_sha256$600000$FiO0IE25Ys2t0VcGykkDPF$6hsYa7NNXwENWQNBxz3wGtW311Ldvl3TESq4BcWz5Hg=','2023-12-01 11:59:04.300671',1,'Дмитрий','Шаронов',1,1,'2023-11-30 06:20:45.000000','sharonov-db@mail.ru','sharonov-db@mail.ru','1979-02-16','','');
+INSERT INTO `auth_app_user` VALUES (1,'pbkdf2_sha256$600000$FiO0IE25Ys2t0VcGykkDPF$6hsYa7NNXwENWQNBxz3wGtW311Ldvl3TESq4BcWz5Hg=','2023-12-01 16:03:50.146143',1,'Дмитрий','Шаронов',1,1,'2023-11-30 06:20:45.000000','sharonov-db@mail.ru','sharonov-db@mail.ru','1979-02-16','','');
 /*!40000 ALTER TABLE `auth_app_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -517,4 +517,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-01 16:04:39
+-- Dump completed on 2023-12-01 21:26:38
