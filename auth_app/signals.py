@@ -28,9 +28,9 @@ def send_login_user_email(**kwargs):
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def grant_pupil_rights(sender, instance, created=True, **kwargs):
     if created:
-        pupil = Group.objects.filter(name='Ученик')
+        pupil = Group.objects.filter(name='Посетитель')
         instance.groups.set(pupil)
-        print(f'Пользователь {instance} успешно добавлен в группу "Ученик"')
+        print(f'Пользователь {instance} успешно добавлен в группу "Посетитель"')
 
 
 account_access.connect(send_login_user_email)

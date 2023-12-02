@@ -4,12 +4,13 @@ from .views import *
 
 urlpatterns = [
     path('', MainView.as_view(), name='index'),
-    # path('create/', CourseCreateView.as_view(), name='create'),
-    # path('delete/<int:course_id>/', CourseDeleteView.as_view(), name='delete'),
-    # path('detail/<course_id>/', cache_control(max_age=600)(CourseDetailView.as_view()), name='detail'),
-    # path('update/<course_id>/', CourseUpdateView.as_view(), name='update'),
+    path('create/', StatyaCreateView.as_view(), name='create'),
+    path('delete/<int:statya_id>/', StatyaDeleteView.as_view(), name='delete'),
+    path('detail/<statya_id>/', cache_control(max_age=600)(StatyaDetailView.as_view()), name='detail'),
+    path('update/<statya_id>/', StatyaUpdateView.as_view(), name='update'),
     # path('enroll/<int:course_id>/', enroll, name='enroll'),
-    # path('review/<int:course_id>/', review, name='review'),
+    path('comment_of_user/<int:statya_id>/', comment_of_user, name='comment_of_user'),
+    path('answer_to_comment/<int:comment_id>/', answer_to_comment, name='answer_to_comment'),
     # path('<int:course_id>/create_lesson/', LessonCreateView.as_view(), name='create_lesson'),
     # paths for session work
     path('add_booking/<int:statya_id>/', add_booking, name='add_booking'),

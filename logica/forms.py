@@ -5,18 +5,22 @@ from .models import *
 
 
 class StatyaForm(forms.ModelForm):
-    rubrika = forms.ModelChoiceField(queryset=Rubrika.objects.all(), empty_label='Выберите рубрику', required=True,
-                                    label='Рубрика', help_text='Укажите рубрику, к которому Вы хотите добавить статью!')
+    rubrika = forms.ModelMultipleChoiceField(queryset=Rubrika.objects.all(), widget=forms.CheckboxSelectMultiple,
+                                             required=True,
+                                             label='Рубрики',
+                                             help_text='Укажите рубрики, к которым Вы хотите добавить статью!')
 
     description = forms.CharField(widget=Textarea(attrs={'placeholder': 'Опишите содержание статьи',
                                                          'rows': 20, 'cols': 35, }), label='')
+
+    data_publication = forms.DateField(required=True, label='Дата публикации')
 
     error_css_class = 'error_field'
     required_css_class = 'required_field'
 
     class Meta:
         model = Statya
-        fields = ('title', 'description', 'content', 'rubrika', 'kartinka',)
+        fields = ('title', 'description', 'content', 'kartinka', )
         labels = {'title': '', 'description': '', 'content': '', 'rubrika': '', 'kartinka': ''}
         widgets = {'title': TextInput(attrs={'placeholder': 'Введите название статьи'}),
                    'description': Textarea(attrs={

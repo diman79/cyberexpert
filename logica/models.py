@@ -29,26 +29,25 @@ class Statya(models.Model):
 
     title = models.CharField(verbose_name='Название статьи', max_length=255, unique=True)
 
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Автор')
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Автор статьи', null=True)
 
-    rubrika = models.ManyToManyField(Rubrika, db_table='statya_rubrika',
-                                     related_name='rubrika', verbose_name='Рубрика')
+    rubrika = models.ManyToManyField(Rubrika)
 
     description = models.TextField(verbose_name='Описание статьи', null=False, blank=False, default='', max_length=200)
 
-    date = models.DateField(verbose_name='Дата публикации')
+    data_publication = models.DateField(verbose_name='Дата публикации', null=True)
 
     content = models.TextField(verbose_name='Контент статьи', null=True, blank=True, default='', max_length=1000)
 
     kartinka = models.ImageField(verbose_name='Картинка', blank=True, upload_to=get_timestamp_path_user)
 
-    count_views = models.IntegerField(verbose_name='Счетчик просмотров', default=0)
+    count_views = models.PositiveIntegerField(verbose_name='Счетчик просмотров', default=0)
 
     def get_author(self):
         return self.author
 
     def __str__(self):
-        return f'Статья: {self.title}. Дата публикации: {self.date}. Автор: {self.get_author()} Описание: {self.description}'
+        return f'Статья: {self.title}. Рубрика: {[rubrika1.naim for rubrika1 in self.rubrika.all()]}. Дата публикации: {self.data_publication}. Автор: {self.get_author()} Описание: {self.description}'
 
     class Meta:
         verbose_name_plural = 'Статьи'
@@ -89,16 +88,14 @@ class Comment(models.Model):
 
     statya = models.ForeignKey(Statya, on_delete=models.CASCADE, verbose_name='Статья')
 
-    rod_description = models.TextField(verbose_name='Описание комментируемой статьи', null=False, blank=False, default='', max_length=500)
-
-    txt = models.TextField(verbose_name='Комментарий', null=False, blank=False, default='', max_length=500)
+    content = models.TextField(verbose_name='Комментарий', null=False, blank=False, default='', max_length=500)
 
     author_comment = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Автор комментария')
 
-    date = models.DateField(verbose_name='Дата публикации комментария')
+    date = models.DateField(verbose_name='Дата публикации комментария', auto_now_add=True)
 
     def __str__(self):
-        return f'Комментарий <{self.txt}> к статье: {self.statya}'
+        return f'Комментарий <{self.content}> к статье: {self.statya}'
 
     class Meta:
         verbose_name_plural = 'Комментарии'
@@ -135,3 +132,15 @@ class Ocenka(models.Model):
         permissions = (
             ('modify_ocenka', 'Can modify ocenka'),
         )
+
+
+class Answer_to_comment(models.Model):
+    komu_answer = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='posetitel', on_delete=models.CASCADE, verbose_name='Посетитель')
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE, verbose_name='Комментарий')
+    content = models.TextField(verbose_name='Текст ответа на комментарий', max_length=250)
+    sent_date = models.DateTimeField(auto_now_add=True)
+    author_otveta = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='avtor_otveta', on_delete=models.CASCADE, verbose_name='Автор', null=True)
+
+    class Meta:
+        verbose_name_plural = 'Ответы на комментарий'
+        verbose_name = 'Ответ на комментарий'

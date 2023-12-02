@@ -32,11 +32,11 @@
 
                 </div>
 
-                <div style="margin-left: 50px; display:inline-block;width: 550px; border: 1px solid gray; border-radius: 10px;">
+                <div style="margin-left: 50px; display:inline-block;width: 550px; border: none; border-radius: 10px;">
                     <form id="form" method="get" style="border: none;">
                         {% csrf_token %}
                         <div style="width: 265px;">{{form.search}}</div>
-                        Рубрика: {{form.rub}}
+                        {{form.rub}}
                     </form>
                 </div>
 
@@ -54,6 +54,8 @@
                         <div class="submenu_profile" style="display: none;">
                             <div>
                                <p><a class="fa fa-heart" href="{% url 'favourites' %}"> Избранное</a></p>
+
+                                <p><a style="color: rgba(238, 68, 68, 0.83)" href="{% url 'create' %}">Создать курс</a></p>
 
                                 <p><a style="color: rgba(238, 68, 68, 0.83)" href="{% url 'password_change' %}"> Сменить пароль</a></p>
 
