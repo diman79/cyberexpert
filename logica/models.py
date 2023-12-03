@@ -63,29 +63,6 @@ class Statya(models.Model):
         return reverse('detail', kwargs={'statya_id': self.pk})
 
 
-class Utilita(models.Model):
-
-    naim = models.CharField(verbose_name='Название утилиты', max_length=255, unique=True)
-
-    description = models.TextField(verbose_name='Описание утилиты', null=False, blank=False, default='', max_length=500)
-
-    file = models.FileField(verbose_name='Файл утилиты', blank=True, upload_to=get_timestamp_path_user)
-
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Автор загрузки утилиты')
-
-    count_downloads = models.IntegerField(verbose_name='Счетчик скачиваний утилиты', default=0)
-
-    class Meta:
-        verbose_name_plural = 'Утилиты'
-        verbose_name = 'Утилита'
-        ordering = ['naim']
-        permissions = (
-        )
-
-    def __str__(self):
-        return f'Утилита: {self.naim}'
-
-
 class Comment(models.Model):
 
     statya = models.ForeignKey(Statya, on_delete=models.CASCADE, verbose_name='Статья')

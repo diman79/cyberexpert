@@ -30,18 +30,6 @@ class StatyaAdmin(admin.ModelAdmin):
     save_on_top = True
 
 
-@admin.register(Utilita)
-class UtilitaAdmin(admin.ModelAdmin):
-    list_display = ('naim', 'description', 'author', 'count_downloads', )
-    search_fields = ('naim', 'description', 'author', )
-
-    list_per_page = 5
-    actions_on_top = True
-    actions_on_bottom = True
-    actions_selection_counter = True
-    save_on_top = True
-
-
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('content', 'author_comment', 'date', 'statya', )

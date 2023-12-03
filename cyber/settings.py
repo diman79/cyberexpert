@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'logica.apps.LogicaConfig',
+    'utilites.apps.UtilitesConfig',
     'auth_app.apps.AuthAppConfig',
     'debug_toolbar',
 ]

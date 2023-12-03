@@ -42,7 +42,7 @@
 
                 <div style="margin-left: 20px; display:inline-block;">
                     <div style="">
-                        <form method="get" action="{% url 'index_utilita' %}">
+                        <form method="get" action="{% url 'index' %}">
                             <button type="submit" style="align: left; width: 300px; display:inline-block; margin-left: 20px; font-size: .9em; border-radius: 50px;background-color: #fff;color: #444;">Утилиты</button>
                         </form>
                     </div>
@@ -61,12 +61,7 @@
                         <div><a style="" href="#">{{ user.last_name }} {{ request.user.first_name }}</a></div>
                         <div class="submenu_profile" style="display: none;">
                             <div>
-                               <p><a class="fa fa-heart" href="{% url 'favourites' %}"> Статьи для чтения</a></p>
-
-                                <p><a style="color: rgba(238, 68, 68, 0.83)" href="{% url 'create' %}">Создать курс</a></p>
-
-                                <p><a style="color: rgba(238, 68, 68, 0.83)" href="{% url 'password_change' %}"> Сменить пароль</a></p>
-
+                                <p><a style="color: rgba(238, 68, 68, 0.83)" href="{% url 'create_utilita' %}">Загрузить утилиту</a></p>
                                 <p><a style="color: rgba(238, 68, 68, 0.83)" href="{% url 'logout' %}">Выход</a></p>
                             </div>
                         </div>

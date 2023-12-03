@@ -3,34 +3,34 @@
 {% load static %}
 {% block content  %}
 <div class="course_container" xmlns="http://www.w3.org/1999/html">
-                {% with course_var=statyas.first %}
+                {% with statya_var=statyas.first %}
                  <div class="course_preview" style="transform: none; box-shadow: none; border: none">
 
                      {% if user.is_authenticated %}
-                        <p><a style="color:blue" href="{% url 'ocenka_statya' course_var.pk %}">Оценить</a> </p>
+                        <p><a style="color:blue" href="{% url 'ocenka_statya' statya_var.pk %}">Оценить</a> </p>
                         <br>
-                        <p><a style="color:red" href="{% url 'delete' course_var.pk %}">Удалить</a> </p>
-                        <p><a style="color:blue" href="{% url 'update' course_var.pk %}">Редактировать</a> </p>
+                        <p><a style="color:red" href="{% url 'delete' statya_var.pk %}">Удалить</a> </p>
+                        <p><a style="color:blue" href="{% url 'update' statya_var.pk %}">Редактировать</a> </p>
                      {% endif %}
 
-                    {% with authors=course_var.author %}
+                    {% with authors=statya_var.author %}
                         {% if authors|length == 1 %}
                             <p>Автор: {{ authors.0.last_name}} {{ authors.0.first_name }}</p>
                         {% endif %}
                     {% endwith %}
-                    <p><b>Рейтинг автора:</b> {{ course_var.reiting }}</p>
-                    <p><b>Название статьи:</b> {{ course_var.title }}</p>
-                    <p><b>Дата публикации:</b> {{ course_var.data_publication }}</p>
-                    <p><b>Описание:</b> {{ course_var.description }}</p>
-                    <p> <b>Контент:</b> <br> <textarea cols="150" rows="20">{{ course_var.content }} </textarea></p>
-                    <p><b>Число просмотров:</b> {{ course_var.count_views }}</p>
+                    <p><b>Рейтинг автора:</b> {{ statya_var.reiting }}</p>
+                    <p><b>Название статьи:</b> {{ statya_var.title }}</p>
+                    <p><b>Дата публикации:</b> {{ statya_var.data_publication }}</p>
+                    <p><b>Описание:</b> {{ statya_var.description }}</p>
+                    <p> <b>Контент:</b> <br> <textarea cols="150" rows="20">{{ statya_var.content }} </textarea></p>
+                    <p><b>Число просмотров:</b> {{ statya_var.count_views }}</p>
 
                  </div>
 
                   <p style="font-weight: bold; margin-left: 5.5%">
                         Отзывы
                         <span style="font-weight: initial; font-size: .85em">{{ reviews.count }} </span>
-                        <a style="font-size: .8em" href="{% url 'comment_of_user' course_var.pk %}">Оставить отзыв</a>
+                        <a style="font-size: .8em" href="{% url 'comment_of_user' statya_var.pk %}">Оставить отзыв</a>
                   </p>
 
                  <div class="reviews.container">
@@ -64,7 +64,7 @@
                                             {% endif %}
                                         {% empty %}
                                             {% if user|has_group:'Автор' %}
-                                                    {% if user == course_var.author %}
+                                                    {% if user == statya_var.author %}
                                                         <p>Ответа автора пока нет. Ваш <a href="{% url 'answer_to_comment' review.pk %}">ответ</a> важен</p>
                                                     {% endif %}
                                             {% else %}
@@ -73,7 +73,7 @@
                                         {% endfor %}
                                 </div>
                             {% empty %}
-                                <p>Отзывов пока нет. Ваш <a href="{% url 'comment_of_user' course_var.pk %}">отзыв</a> важен</p>
+                                <p>Отзывов пока нет. Ваш <a href="{% url 'comment_of_user' statya_var.pk %}">отзыв</a> важен</p>
                             {% endfor %}
 
                         </div>

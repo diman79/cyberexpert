@@ -1,3 +1,4 @@
+from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render
 
 # Create your views here.
@@ -107,6 +108,11 @@ class StatyaCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
             for item in rubriks:
                 statya.rubrika.add(item)
 
+            file = self.request.FILES['file']
+            fs = FileSystemStorage()
+            filename = fs.save(file.name, file)
+            statya.file = file
+
             statya.data_publication = datetime.now().date()
             cache.delete('statyas')
             statya.save()
@@ -144,9 +150,6 @@ class StatyaDetailView(ListView):
 
         comment = Comment.objects.select_related('author_comment').filter(statya=statya_id)
         context['reviews'] = comment
-
-
-        # print(comment)
 
         answer = Answer_to_comment.objects.select_related('author_otveta').filter(comment__statya=self.kwargs.get('statya_id'))
         # print(answer)

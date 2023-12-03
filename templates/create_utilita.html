@@ -4,7 +4,7 @@
 <div class="main_container" xmlns="http://www.w3.org/1999/html">
         <div class="main_item">
             {% spaceless %}
-            <h3>{% block form_name %} Создание статьи {% endblock %}</h3>
+            <h3>{% block form_name %} Загрузка утилиты {% endblock %}</h3>
             <form id="form" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ form.as_p }}
