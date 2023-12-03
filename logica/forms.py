@@ -49,8 +49,10 @@ class StatyaForm(forms.ModelForm):
 
 class FilterOrderBySearchForm(forms.Form):
     CHOICES = (
-        ('count_views', 'По возрастанию просмотров'),
-        ('-count_views', 'По убыванию просмотров'),
+        ('count_views', 'Сортировка по возрастанию просмотров'),
+        ('-count_views', 'Сортировка по убыванию просмотров'),
+        ('reiting', 'Сортировка по возрастанию рейтинга'),
+        ('-reiting', 'Сортировка по убыванию рейтинга'),
     )
 
     field_order = ['rub', 'search', ]
