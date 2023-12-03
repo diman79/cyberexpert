@@ -41,8 +41,16 @@
                 </div>
 
                 <div style="margin-left: 20px; display:inline-block;">
-                    <div style="align: left; width: 600px; display:inline-block;"><button style="margin-left: 20px; font-size: .9em; border-radius: 50px;background-color: #fff;color: #444;">Утилиты</button>
-                    <button style="margin-left: 20px; margin-left: 50px; font-size: .9em; border-radius: 50px;background-color: #fff;color: #444; ">Статьи</button></div>
+                    <div style="">
+                        <form method="get" action="{% url 'index' %}">
+                            <button type="submit" style="align: left; width: 300px; display:inline-block; margin-left: 20px; font-size: .9em; border-radius: 50px;background-color: #fff;color: #444;">Утилиты</button>
+                        </form>
+                    </div>
+                    <div>
+                        <form method="get" action="{% url 'index' %}">
+                            <button type="submit" style="display:inline-block; width: 300px; margin-left: 20px; margin-left: 50px; font-size: .9em; border-radius: 50px;background-color: #fff;color: #444; ">Статьи</button>
+                        </form>
+                    </div>
                 </div>
 
             </div>
@@ -53,7 +61,7 @@
                         <div><a style="" href="#">{{ user.last_name }} {{ request.user.first_name }}</a></div>
                         <div class="submenu_profile" style="display: none;">
                             <div>
-                               <p><a class="fa fa-heart" href="{% url 'favourites' %}"> Избранное</a></p>
+                               <p><a class="fa fa-heart" href="{% url 'favourites' %}"> Статьи для чтения</a></p>
 
                                 <p><a style="color: rgba(238, 68, 68, 0.83)" href="{% url 'create' %}">Создать курс</a></p>
 

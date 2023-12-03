@@ -139,8 +139,12 @@ class StatyaDetailView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(StatyaDetailView, self).get_context_data(**kwargs)
-        comment = Comment.objects.select_related('author_comment').filter(statya=self.kwargs.get('statya_id'))
+
+        statya_id = self.kwargs.get('statya_id')
+
+        comment = Comment.objects.select_related('author_comment').filter(statya=statya_id)
         context['reviews'] = comment
+
 
         # print(comment)
 
@@ -212,3 +216,38 @@ def answer_to_comment(request, comment_id):
         return redirect(reverse('detail', kwargs={'statya_id': comment.statya.pk}))
     else:
         return render(request, 'review.html')
+
+
+@transaction.non_atomic_requests
+@login_required
+@permission_required('logica.add_ocenka', raise_exception=True)
+def ocenka_statya(request, statya_id):
+    if request.method == 'POST':
+        data = request.POST
+
+        a = Statya.objects.get(id=statya_id)
+        author = a.author
+
+        bal = data['bal']
+
+        if Ocenka.objects.filter(komu=author, author_ocenka=request.user, statya=a).exists():
+            return HttpResponse("Вы уже оценивали эту статью.")
+        else:
+            r = Ocenka()
+            r.komu = author
+            r.author_ocenka = request.user
+            r.statya = a
+            r.bal = bal
+            r.save()
+
+            c = Ocenka.objects.filter(komu=author).aggregate(bals_all=Sum("bal"))
+            d = Ocenka.objects.filter(komu=author).count()
+            print('bals_all', c['bals_all'])
+            print('count', d)
+            reiting = round(c['bals_all'] / d, 2)
+            print(reiting)
+            Statya.objects.filter(author=author).update(reiting=reiting)
+
+            return redirect(reverse('detail', kwargs={'statya_id': statya_id}))
+    else:
+        return render(request, 'ocenka.html')

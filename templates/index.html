@@ -3,7 +3,6 @@
 {% block content  %}
 
     <div class="statyas_container">
-        {% now 'SHORT_DATETIME_FORMAT' %}
         {% for statya in statyas %}
             <div class="statya_preview">
                 {{ statya.get_absolute_url }}
@@ -24,9 +23,10 @@
                     </form>
                     </div>
                 {% endif %}
-                <p>{{ statya.title }}</p>
-                <p>{{ statya.date|date:"j E"  }}</p>
-                <p>{{ statya.description|capfirst }}</p>
+                <p><b>Рейтинг автора:</b> {{ statya.reiting }}</p>
+                <p><b>Название статьи:</b> {{ statya.title }}</p>
+                <p><b>Дата публикации:</b> {{ statya.data_publication|date:"d.m.Y"  }}</p>
+                <p><b>Описание статьи:</b> {{ statya.description|capfirst }}</p>
 
             </div>
         {% empty %}

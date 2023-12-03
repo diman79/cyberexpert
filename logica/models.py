@@ -43,6 +43,8 @@ class Statya(models.Model):
 
     count_views = models.PositiveIntegerField(verbose_name='Счетчик просмотров', default=0)
 
+    reiting = models.FloatField(verbose_name='Рейтинг', default=0)
+
     def get_author(self):
         return self.author
 
@@ -112,6 +114,8 @@ class Ocenka(models.Model):
 
     author_ocenka = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Автор оценка', related_name='avtor')
 
+    statya = models.ForeignKey(Statya, on_delete=models.CASCADE, verbose_name='Оцениваемая статья', related_name='statya', null=True)
+
     CHOICES = (
         (1, "1"),
         (2, "2"),
@@ -123,7 +127,7 @@ class Ocenka(models.Model):
     bal = models.IntegerField(choices=CHOICES, default=0)
 
     def __str__(self):
-        return f'Оценка <{self.bal}> пользователю <{self.komu}> от {self.author}'
+        return f'Оценка <{self.bal}> пользователю <{self.komu}> от {self.author_ocenka}'
 
     class Meta:
         verbose_name_plural = 'Оценка'

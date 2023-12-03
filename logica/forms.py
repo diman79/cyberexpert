@@ -64,14 +64,16 @@ class FilterOrderBySearchForm(forms.Form):
         CHOICES2.append((elem.naim, elem.naim))
 
     rub = forms.ChoiceField(label='Рубрика', label_suffix=':',choices=CHOICES2, required=True, initial='',
-                            widget=forms.Select(attrs={'onchange': 'submit();'}))
+                            widget=forms.Select(attrs={'onchange': 'submit();',
+                                                       'rows': '100'}))
 
-    search = forms.CharField(label='Поиск', label_suffix=':', required=False,
+    search = forms.CharField(label='Поиск', label_suffix=':', required=True,
                              widget=forms.TextInput(attrs={'onchange': 'submit();',
                                                            'placeholder': 'Поиск ...',
                                                            'rows': 20,
                                                            'cols': 20}))
 
 
-class SettingForm(forms.Form):
-    paginate_by = forms.IntegerField(label='Записей на одной странице', min_value=2, max_value=20, initial=5)
+
+
+
