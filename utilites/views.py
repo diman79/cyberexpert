@@ -166,7 +166,6 @@ class UtilitaUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView)
 
 @transaction.non_atomic_requests
 def download_utilita(request, utilita_id):
-
     a = Utilita.objects.get(id=utilita_id)
     count_downloads = a.count_downloads + 1
     Utilita.objects.filter(id=utilita_id).update(count_downloads=count_downloads)
@@ -174,5 +173,8 @@ def download_utilita(request, utilita_id):
     response = HttpResponse(a.file, content_type='application/force-download')
     response['Content-Disposition'] = f'attachment; filename="{a.file.url}"'
     return response
+
+
+
 
 

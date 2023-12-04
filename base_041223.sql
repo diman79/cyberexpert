@@ -48,7 +48,7 @@ CREATE TABLE `auth_app_user` (
 
 LOCK TABLES `auth_app_user` WRITE;
 /*!40000 ALTER TABLE `auth_app_user` DISABLE KEYS */;
-INSERT INTO `auth_app_user` VALUES (1,'pbkdf2_sha256$600000$FiO0IE25Ys2t0VcGykkDPF$6hsYa7NNXwENWQNBxz3wGtW311Ldvl3TESq4BcWz5Hg=','2023-12-04 07:31:22.397795',1,'Дмитрий','Шаронов',1,1,'2023-11-30 06:20:45.000000','sharonov-db@mail.ru','sharonov-db@mail.ru','1979-02-16','',''),(2,'pbkdf2_sha256$600000$7ifZOecSrRlW3rVEPB1IWa$mx/kqmvtFCWLw5mDpG0uOASFeGT/2WNlSK9saz4yxOE=','2023-12-02 15:09:54.023575',0,'uchenik','uchenik',0,1,'2023-12-02 15:02:08.000000','uchenik@uchenik.ru','uchenik@uchenik.ru','2023-02-12','wqw',''),(3,'pbkdf2_sha256$600000$lpMDB0bxGJ3bvOuBs9devi$5W4DWI9Y4Tsi7Y7VzL+vuPNdVSNu0BKFuAhxLMXa0dc=','2023-12-02 16:14:47.206464',0,'uchenik2','uchenik2',0,1,'2023-12-02 15:20:10.938909',NULL,'uchenik2@uchenik2.ru','2023-02-12','wwewe','');
+INSERT INTO `auth_app_user` VALUES (1,'pbkdf2_sha256$600000$FiO0IE25Ys2t0VcGykkDPF$6hsYa7NNXwENWQNBxz3wGtW311Ldvl3TESq4BcWz5Hg=','2023-12-04 10:25:11.029582',1,'Дмитрий','Шаронов',1,1,'2023-11-30 06:20:45.000000','sharonov-db@mail.ru','sharonov-db@mail.ru','1979-02-16','',''),(2,'pbkdf2_sha256$600000$7ifZOecSrRlW3rVEPB1IWa$mx/kqmvtFCWLw5mDpG0uOASFeGT/2WNlSK9saz4yxOE=','2023-12-02 15:09:54.023575',0,'uchenik','uchenik',0,1,'2023-12-02 15:02:08.000000','uchenik@uchenik.ru','uchenik@uchenik.ru','2023-02-12','wqw',''),(3,'pbkdf2_sha256$600000$lpMDB0bxGJ3bvOuBs9devi$5W4DWI9Y4Tsi7Y7VzL+vuPNdVSNu0BKFuAhxLMXa0dc=','2023-12-02 16:14:47.206464',0,'uchenik2','uchenik2',0,1,'2023-12-02 15:20:10.938909',NULL,'uchenik2@uchenik2.ru','2023-02-12','wwewe','');
 /*!40000 ALTER TABLE `auth_app_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -487,7 +487,7 @@ CREATE TABLE `logica_statya` (
 
 LOCK TABLES `logica_statya` WRITE;
 /*!40000 ALTER TABLE `logica_statya` DISABLE KEYS */;
-INSERT INTO `logica_statya` VALUES (6,'sdsd','sdsd','2023-12-02','sdsd','',0,1,3.67),(8,'rtrtrtr1','rtrt1','2023-12-02','trtrtr','',19,1,3.67),(9,'2sdde','sdd','2023-12-02','dsdd','',19,1,3.67),(10,'ssD','SDASDASD','2023-12-02','ASDASDDSA','',19,1,3.67),(11,'kkkkkkk','kkkkkkkk','2023-12-02','kkkkkkkkkkkkk','',0,1,3.67),(12,'аааа','аааа','2023-12-02','аааа','',0,1,3.67),(13,'ddd','ddd','2023-12-02','ddd','',0,1,3.67),(15,'sdsd33333','sds','2023-12-02','sdsd','',0,1,3.67),(16,'wwewwe','wewweew','2023-12-02','wewewew','',0,1,3.67),(17,'qwqwq23','qwqwqw','2023-12-02','qwqwqwq','',0,1,3.67),(18,'ццуцууцуцу33','ывывыв','2023-12-02','ывывы','',0,1,3.67),(19,'dsdd44','qqwwq','2023-12-02','qwqwqw','',0,1,3.67),(22,'wwwwwww','wqw','2023-12-02','qwqw','',0,1,3.67),(23,'wwew','wewe','2023-12-02','wewe','',20,1,3.67),(24,'uuuuuuuuuuuuuuuuuuuu67','dwdweew','2023-12-02','wewe','',18,1,3.67),(25,'ghghghgh','ghghghh','2023-12-02','ghghgh','',18,1,3.67);
+INSERT INTO `logica_statya` VALUES (6,'sdsd','sdsd','2023-12-02','sdsd','',0,1,3.67),(8,'rtrtrtr1','rtrt1','2023-12-02','trtrtr','',19,1,3.67),(9,'2sdde','sdd','2023-12-02','dsdd','',19,1,3.67),(10,'ssD','SDASDASD','2023-12-02','ASDASDDSA','',19,1,3.67),(11,'kkkkkkk','kkkkkkkk','2023-12-02','kkkkkkkkkkkkk','',0,1,3.67),(12,'аааа','аааа','2023-12-02','аааа','',0,1,3.67),(13,'ddd','ddd','2023-12-02','ddd','',0,1,3.67),(15,'sdsd33333','sds','2023-12-02','sdsd','',0,1,3.67),(16,'wwewwe','wewweew','2023-12-02','wewewew','',0,1,3.67),(17,'qwqwq23','qwqwqw','2023-12-02','qwqwqwq','',0,1,3.67),(18,'ццуцууцуцу33','ывывыв','2023-12-02','ывывы','',0,1,3.67),(19,'dsdd44','qqwwq','2023-12-02','qwqwqw','',0,1,3.67),(22,'wwwwwww','wqw','2023-12-02','qwqw','',0,1,3.67),(23,'wwew','wewe','2023-12-02','wewe','',20,1,3.67),(24,'uuuuuuuuuuuuuuuuuuuu67','dwdweew','2023-12-02','wewe','',19,1,3.67),(25,'ghghghgh','ghghghh','2023-12-02','ghghgh','',19,1,3.67);
 /*!40000 ALTER TABLE `logica_statya` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -550,7 +550,7 @@ CREATE TABLE `utilites_utilita` (
 
 LOCK TABLES `utilites_utilita` WRITE;
 /*!40000 ALTER TABLE `utilites_utilita` DISABLE KEYS */;
-INSERT INTO `utilites_utilita` VALUES (1,'wewe','wewe','2023-12-03',0,0,1,'Снимок_экрана_от_2023-11-28_20-31-33.png'),(6,'ww','wewe',NULL,0,1,NULL,'Снимок_экрана_от_2023-11-28_16-46-16_FTAJtnU.png');
+INSERT INTO `utilites_utilita` VALUES (1,'wewe','wewe','2023-12-03',18,0,1,'Снимок_экрана_от_2023-11-28_20-31-33.png'),(6,'ww','wewe',NULL,3,1,NULL,'Снимок_экрана_от_2023-11-28_16-46-16_FTAJtnU.png');
 /*!40000 ALTER TABLE `utilites_utilita` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -592,4 +592,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-04 11:57:07
+-- Dump completed on 2023-12-04 14:30:41

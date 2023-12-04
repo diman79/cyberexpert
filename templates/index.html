@@ -2,9 +2,9 @@
 {% load static %}
 {% block content  %}
 
-    <div class="statyas_container">
+    <div class="courses_container">
         {% for statya in statyas %}
-            <div class="couqrse_preview">
+            <div class="course_preview">
                 {{ statya.get_absolute_url }}
                 <p><a href="{% url 'detail' statya.pk %}">{{ statya.title|title }}</a> </p>
                 {% if request.session.favourites.empty or not statya.pk in request.session.favourites %}
