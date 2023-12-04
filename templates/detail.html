@@ -18,6 +18,9 @@
                             <p>Автор: {{ authors.0.last_name}} {{ authors.0.first_name }}</p>
                         {% endif %}
                     {% endwith %}
+                     {% if statya_var.kartinka %}
+                            <img src="{{ statya_var.kartinka.url }}">
+                     {% endif%}
                     <p><b>Рейтинг автора:</b> {{ statya_var.reiting }}</p>
                     <p><b>Название статьи:</b> {{ statya_var.title }}</p>
                     <p><b>Дата публикации:</b> {{ statya_var.data_publication }}</p>
@@ -26,7 +29,8 @@
                     <p><b>Число просмотров:</b> {{ statya_var.count_views }}</p>
 
                  </div>
-
+             <div style="margin-bottom: 50px">
+               {% if user.is_authenticated %}
                   <p style="font-weight: bold; margin-left: 5.5%">
                         Отзывы
                         <span style="font-weight: initial; font-size: .85em">{{ reviews.count }} </span>
@@ -48,11 +52,9 @@
                                 <span style="font-size: 1.5em">{{ review.content }}</span>
                                 <p><a href="{% url 'answer_to_comment' review.pk %}">Ответ автора</a> </p>
 
-                                <div class="review">
-                                        <p><a href="{% url 'answer_to_comment' review.pk %}">Ответ автора</a> </p>
+                                <div class="review" style="border: dashed red" >
                                         {% for otvet in otvets %}
-                                            {% if otvet.author_otveta == review.author_comment %}
-                                                <p><a href="{% url 'answer_to_comment' review.pk %}">Ответ автора</a> </p>
+                                            {% if otvet.author_otveta == review.author_comment and otvet.comment.id == review.pk %}
                                                 {% if otvet.author_otveta.avatar %}
                                                     <img src="{{ review.user.avatar.url }}">
                                                 {% else %}
@@ -65,7 +67,7 @@
                                         {% empty %}
                                             {% if user|has_group:'Автор' %}
                                                     {% if user == statya_var.author %}
-                                                        <p>Ответа автора пока нет. Ваш <a href="{% url 'answer_to_comment' review.pk %}">ответ</a> важен</p>
+                                                        <p>Ответа автора пока нет.</p>
                                                     {% endif %}
                                             {% else %}
                                                 <p>Ответа автора пока нет...</p>
@@ -73,12 +75,13 @@
                                         {% endfor %}
                                 </div>
                             {% empty %}
-                                <p>Отзывов пока нет. Ваш <a href="{% url 'comment_of_user' statya_var.pk %}">отзыв</a> важен</p>
+                                <p>Отзывов пока нет...</p>
                             {% endfor %}
 
                         </div>
                  </div>
-
+               {% endif %}
+            </div>
 
       {% endwith %}
 </div>

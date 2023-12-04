@@ -108,7 +108,7 @@ class StatyaCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
             for item in rubriks:
                 statya.rubrika.add(item)
 
-            file = self.request.FILES['file']
+            file = self.request.FILES['kartinka']
             fs = FileSystemStorage()
             filename = fs.save(file.name, file)
             statya.file = file
