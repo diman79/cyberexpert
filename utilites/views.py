@@ -1,3 +1,5 @@
+import mimetypes
+
 from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render
 
@@ -160,3 +162,17 @@ class UtilitaUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView)
 
     def get_success_url(self):
         return reverse('detail_utilita', kwargs={'utilita_id': self.object.id})
+
+
+@transaction.non_atomic_requests
+def download_utilita(request, utilita_id):
+
+    a = Utilita.objects.get(id=utilita_id)
+    count_downloads = a.count_downloads + 1
+    Utilita.objects.filter(id=utilita_id).update(count_downloads=count_downloads)
+
+    response = HttpResponse(a.file, content_type='application/force-download')
+    response['Content-Disposition'] = f'attachment; filename="{a.file.url}"'
+    return response
+
+

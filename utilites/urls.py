@@ -8,4 +8,5 @@ urlpatterns = [
     path('delete/<int:utilita_id>/', UtilitaDeleteView.as_view(), name='delete_utilita'),
     path('detail/<utilita_id>/', cache_control(max_age=600)(UtilitaDetailView.as_view()), name='detail_utilita'),
     path('update/<utilita_id>/', UtilitaUpdateView.as_view(), name='update_utilita'),
+    path('download/<utilita_id>/', download_utilita, name='download_utilita'),
 ]

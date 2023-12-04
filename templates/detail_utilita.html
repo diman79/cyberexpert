@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base_utilita.html' %}
 {% load templates_tag %}
 {% load static %}
 {% block content  %}
@@ -25,9 +25,12 @@
                         {% endif %}
                     {% endwith %}
                     <p><b>Название утилиты:</b> {{ utilita_var.title }}</p>
+                     <p><b>Загрузил утилиту:</b> {{ utilita.author }}</p>
                     <p><b>Дата загрузки:</b> {{ utilita_var.data_publication }}</p>
                     <p><b>Описание:</b> {{ utilita_var.description }}</p>
                     <p><b>Число загрузок:</b> {{ utilita_var.count_downloads }}</p>
+                    <p><a style="color:blue" href="{% url 'download_utilita' utilita_var.pk %}">Скачать</a></p>
+
 
                  </div>
       {% endwith %}
