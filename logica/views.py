@@ -216,6 +216,9 @@ def answer_to_comment(request, comment_id):
                                          comment=comment,
                                          author_otveta=request.user,
                                          komu_answer=comment.author_comment)
+
+        # Отправка письма - ответа на комментарий
+        answer_author.send(sender=Answer_to_comment, request=request, comment_id=comment_id)
         return redirect(reverse('detail', kwargs={'statya_id': comment.statya.pk}))
     else:
         return render(request, 'review.html')

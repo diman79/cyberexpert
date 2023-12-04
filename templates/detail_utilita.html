@@ -11,12 +11,12 @@
                             {% if user == utilita_var.author %}
                                 <p><a style="color:red" href="{% url 'delete_utilita' utilita_var.pk %}">Удалить</a> </p>
                             {% endif %}
-                        {% else %}
-                            {% if user|has_group:'Модератор' %}
+                         {% endif %}
+
+                         {% if user|has_group:'Модератор' %}
                                 <p><a style="color:blue" href="{% url 'update_utilita' utilita_var.pk %}">Редактировать</a> </p>
                                 <p><a style="color:red" href="{% url 'delete_utilita' utilita_var.pk %}">Удалить</a> </p>
-                            {% endif %}
-                        {% endif %}
+                         {% endif %}
                      {% endif %}
 
                     {% with authors=utilita_var.author %}
@@ -24,7 +24,6 @@
                             <p>Автор: {{ authors.0.last_name}} {{ authors.0.first_name }}</p>
                         {% endif %}
                     {% endwith %}
-                    <p><b>Рейтинг автора:</b> {{ utilita_var.author.reiting }}</p>
                     <p><b>Название утилиты:</b> {{ utilita_var.title }}</p>
                     <p><b>Дата загрузки:</b> {{ utilita_var.data_publication }}</p>
                     <p><b>Описание:</b> {{ utilita_var.description }}</p>

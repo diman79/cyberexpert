@@ -8,10 +8,13 @@ class UtilitaForm(forms.ModelForm):
     rubrika = forms.ModelMultipleChoiceField(queryset=Rubrika.objects.all(), widget=forms.CheckboxSelectMultiple,
                                              required=True,
                                              label='Рубрики',
+                                             label_suffix=':',
                                              help_text='Укажите рубрики, к которым Вы хотите добавить утилиту!')
 
-    description = forms.CharField(widget=Textarea(attrs={'placeholder': 'Опишите утилиту',
-                                                         'rows': 20, 'cols': 35, }), label='')
+    description = forms.CharField(label='Описание', label_suffix=':',widget=Textarea(attrs={'placeholder': 'Опишите утилиту',
+                                                         'rows': 20, 'cols': 35, }))
+
+    moderated = forms.BooleanField(label='Пройдена модерация', label_suffix=':')
 
     file = forms.FileField()
 
@@ -20,7 +23,7 @@ class UtilitaForm(forms.ModelForm):
 
     class Meta:
         model = Utilita
-        fields = ('title', 'description', 'rubrika', 'file', )
+        fields = ('title', 'description', 'rubrika', 'file', 'moderated')
         labels = {'title': '', 'description': '', 'content': '', 'rubrika': '', 'kartinka': ''}
         widgets = {'title': TextInput(attrs={'placeholder': 'Введите название утилиты'}),
                    'description': Textarea(attrs={

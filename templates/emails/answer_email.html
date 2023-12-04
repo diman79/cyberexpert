@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="veiwport content="width=device-width, inital-scale=1">
-    <title>Codeby - {% block title %}онлайн-курсы{% endblock %}</title>
+    <title>Codeexpert - {% block title %}статьи по информационной безопасности {% endblock %}</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
             integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
@@ -18,13 +18,13 @@
         <p>{{ message }}</p><br>
         <div class="course_container">
             <div class="course_preview" style="transform: none; box-shadow: none; border: none">
-                    <p><a href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{{ course.get_absolute_url }}">Курс: {{ course.title }}</a></p>
-                    <p>Описание: {{ course.description }}</p>
-                    <p>Авторы: {{ course.authors}}</p>
-                    <p>Дата старта: {{ course.start_date }}</p>
-                    <p>Продолжение: {{ course.duration }}</p>
-                    <p>Цена: {{ course.price }} руб.</p>
-                    <p>Число уроков: {{ course.count_lessons }}</p>
+                    <p><a href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{{ statya.get_absolute_url }}">Статья: {{ statya.title }}</a></p>
+                    <p><b>Дата публикации:</b> {{ statya.data_publication }}</p>
+                    <p><b>Описание:</b> {{ statya.description }}</p>
+                    <br>
+                    <p><b>Ваш комментарий:</b> {{ comment.content }}</p>
+                    <br>
+                    <p><b>Ответ автора:</b> {{ answer.content }}</p>
             </div>
         </div>
 

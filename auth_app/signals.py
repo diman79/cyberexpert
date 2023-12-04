@@ -18,7 +18,7 @@ def send_login_user_email(**kwargs):
         'message': f"В ваш аккаунт {request.POST['username']} был выполнен вход {timezone.now().isoformat()}"
                    f"\nЕсли вы не совершали вход, то рекомендуем немедленно сменить пароль"
     }
-    email = EmailMessage(subject='Вход в аккаунт | Платформа Codeby',
+    email = EmailMessage(subject='Вход в аккаунт | Платформа Cyberexpert',
                          body=render_to_string(template_name, context),
                          to=[request.POST['username']])
     email.content_subtype = 'html'

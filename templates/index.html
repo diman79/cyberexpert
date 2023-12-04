@@ -4,7 +4,7 @@
 
     <div class="statyas_container">
         {% for statya in statyas %}
-            <div class="course_preview">
+            <div class="couqrse_preview">
                 {{ statya.get_absolute_url }}
                 <p><a href="{% url 'detail' statya.pk %}">{{ statya.title|title }}</a> </p>
                 {% if request.session.favourites.empty or not statya.pk in request.session.favourites %}
@@ -13,14 +13,13 @@
                             {% csrf_token %}
                             <button id="1" type="submit" class="fa fa-plus" style="color: #fa9405"></button>
                         </form>
-
                     </div>
                 {% else %}
                     <div class="favourite_container">
-                    <form id="favourite_form" method="post" action="{% url 'remove_booking' statya.pk %}" title="Удалить из списка для чтения">
-                        {% csrf_token %}
-                        <button type="submit" class="fa fa-check" style="color: green"></button>
-                    </form>
+                        <form id="favourite_form" method="post" action="{% url 'remove_booking' statya.pk %}" title="Удалить из списка для чтения">
+                            {% csrf_token %}
+                            <button type="submit" class="fa fa-check" style="color: green"></button>
+                        </form>
                     </div>
                 {% endif %}
                 <p><b>Рейтинг автора:</b> {{ statya.reiting }}</p>
@@ -31,8 +30,9 @@
 
             </div>
         {% empty %}
-            <p>На данный момент не найдено ни одной статьи. Проверьте страницу позже.</p>
-        {% endfor %}
+        <p>На данный момент не найдено ни одной статьи. Проверьте страницу позже.</p>
+         {% endfor %}
+
     </div>
 
 

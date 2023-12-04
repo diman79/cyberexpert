@@ -15,6 +15,7 @@ from django.urls import reverse
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, FormView
 from .forms import FilterOrderBySearchForm, UtilitaForm
 from .models import *
+from logica.models import Statya
 from auth_app.models import User
 from django.db.models import Q, F, Count, Sum
 from django.db.models.signals import pre_save
@@ -26,19 +27,19 @@ from datetime import datetime
 
 class MainView(ListView, FormView):
     template_name = 'index_utilita.html'
-    queryset = Utilita.objects.filter()
+    queryset = Utilita.objects.all()
     context_object_name = 'utilites'
     form_class = FilterOrderBySearchForm
 
     paginate_by = 4
 
-    def get_context_data(self, **kwargs):
-        utilites = Utilita.objects.all()
-        data = super().get_context_data(**kwargs)
-        data['utilites'] = utilites
-        return data
-
     def get_queryset(self):
+        user = self.request.user
+        if user.groups.filter(name='Модератор').exists() or user.groups.filter(name='Администратор').exists():
+            MainView.queryset = Utilita.objects.all()
+        else:
+            MainView.queryset = Utilita.objects.filter(moderated=True)
+
         if 'utilites' in cache:
             queryset = cache.get('utilites')
         else:
@@ -79,7 +80,19 @@ class UtilitaCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView)
     def form_valid(self, form):
         with transaction.atomic():
             utilita = form.save(commit=True)
-            utilita.author = self.request.user
+            author = self.request.user
+            if author.groups.filter(name='Автор').exists():
+                a = Statya.objects.filter(author=author)
+                if a.count() > 0:
+                    if a[0].reiting < 4.95:
+                        return HttpResponse("Для добавления утилиты ваш рейтинг должен быть >=4.95 ")
+                else:
+                    return HttpResponse("Для добавления утилиты у вас должны быть опубликованные статьи,"
+                                    " и ваш рейтинг должен быть >=4.95 ")
+            else:
+                return HttpResponse("Для добавления утилиты вы должны быть в группе Авторов")
+
+            utilita.author = author
 
             rubriks = self.request.POST.getlist('rubrika')
 
@@ -138,7 +151,7 @@ class UtilitaDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView)
 class UtilitaUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Utilita
     form_class = UtilitaForm
-    template_name = 'update_utilita.html'
+    template_name = 'create.html'
     pk_url_kwarg = 'utilita_id'
     permission_required = 'logica.change_utilita',
 
