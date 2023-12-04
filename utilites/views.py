@@ -175,6 +175,14 @@ def download_utilita(request, utilita_id):
     return response
 
 
+class Moderate_view(MainView):
+    permission_required = 'utilites.change_utilita',
+
+    def get_queryset(self):
+        queryset = super(Moderate_view, self).get_queryset()
+        return queryset.filter(moderated=False)
+
+
 
 
 

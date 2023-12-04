@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+{% load templates_tag %}
 
 
 
@@ -53,6 +54,7 @@
                     </div>
                 </div>
 
+
             </div>
             <div class="auth_container">
 
@@ -62,6 +64,9 @@
                         <div class="submenu_profile" style="display: none;">
                             <div>
                                 <p><a style="color: rgba(238, 68, 68, 0.83)" href="{% url 'create_utilita' %}">Загрузить утилиту</a></p>
+                                {% if user|has_group:'Модератор' %}
+                                    <p><a style="color: rgba(238, 68, 68, 0.83)" href="{% url 'moderate_utilita' %}">Модерация загруженных утилит</a></p>
+                                {% endif %}
                                 <p><a style="color: rgba(238, 68, 68, 0.83)" href="{% url 'logout' %}">Выход</a></p>
                             </div>
                         </div>
@@ -71,6 +76,7 @@
                     <div class="nav-toggle;" style="margin-left: 50px;"><span></span></div>
                     <div class="login"><a href="{% url 'log_in' %}" style="color: #000">Вход</a></div>
                     <div class="register"><a href="{% url 'register' %}" style="color: #fff">Регистрация</a></div>
+
                 {% endif %}
 
 

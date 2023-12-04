@@ -63,7 +63,7 @@ class FilterOrderBySearchForm(forms.Form):
     CHOICES2 = []
 
     for elem in Rubrika.objects.all():
-        CHOICES2.append((elem.naim, elem.naim))
+        CHOICES2.append((elem.naim, 'Рубрика: ' + elem.naim))
 
     rub = forms.ChoiceField(label='Рубрика', label_suffix=':',choices=CHOICES2, required=True, initial='',
                             widget=forms.Select(attrs={'onchange': 'submit();',
