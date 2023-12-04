@@ -34,7 +34,7 @@ urlpatterns = [
     path('auth/', include('auth_app.urls')),
     path('statyas/', include('logica.urls')),
     path('utilites/', include('utilites.urls')),
-    path("__debug__/", include("debug_toolbar.urls")),
+
 ]
 
 if settings.DEBUG:

@@ -1,5 +1,5 @@
-$(`.auth_container`).hover(() => {
-    $(`.submenu_profile``).slideToggle();
+$('.auth_container').hover(() => {
+    $('.submenu_profile').slideDown();
 });
 
 //Отображение трекинга курсов
