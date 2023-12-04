@@ -4,7 +4,7 @@
 {% block content  %}
 <div class="course_container" xmlns="http://www.w3.org/1999/html">
                 {% with statya_var=statyas.first %}
-                 <div class="course_preview" style="transform: none; box-shadow: none; border: none">
+                 <div class="course_preview" style="margin-bottom: 50px; transform: none; box-shadow: none; border: none">
 
                      {% if user.is_authenticated %}
                         <p><a style="color:blue" href="{% url 'ocenka_statya' statya_var.pk %}">Оценить</a> </p>
@@ -29,7 +29,7 @@
                     <p><b>Число просмотров:</b> {{ statya_var.count_views }}</p>
 
                  </div>
-             <div style="margin-bottom: 50px">
+             <div style="margin-bottom: 50px;">
                {% if user.is_authenticated %}
                   <p style="font-weight: bold; margin-left: 5.5%">
                         Отзывы
