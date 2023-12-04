@@ -221,7 +221,7 @@ def answer_to_comment(request, comment_id):
         answer_author.send(sender=Answer_to_comment, request=request, comment_id=comment_id)
         return redirect(reverse('detail', kwargs={'statya_id': comment.statya.pk}))
     else:
-        return render(request, 'review.html')
+        return render(request, 'otvet_avtora.html')
 
 
 @transaction.non_atomic_requests

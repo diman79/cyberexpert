@@ -63,6 +63,7 @@
 
                                                 <span style="font-size: 2em; font-weight: bold" >{{ otvet.author_otveta.last_name }} {{ otvet.author_otveta.first_name }} (автор): </span>
                                                 <span style="font-size: 1.5em">{{ otvet.content }}</span>
+                                                <br>
                                             {% endif %}
                                         {% empty %}
                                             {% if user|has_group:'Автор' %}
