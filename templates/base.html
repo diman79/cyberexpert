@@ -90,27 +90,23 @@
     </main>
 
     <footer>
+
         <div class="footer_container" style="display:inline-block;">
-            <div class="logo">
+            <div class="logo" style="display:inline-block;">
                 <div class="copyright-mark">
                     <p><img src="{% static 'logo.jpg' %}" alt="Лого сайта" title="Лого сайта"/>
                         <span class="title">Codeexpert</span> - Статьи по информационной безопасности
+
                     </p>
                 </div>
-
-
-                    <div>&copy; {{ CURRENT_YEAR }} Все права защищены</div>
-
             </div>
         </div>
-
-                <div style="margin-left: 50px; display:inline-block; margin-top: 5-px;">
-                    <form id="form" method="get" style="width: 400px; border: none; border-color: #A9A9A9;">
-                        {% csrf_token %}
-                            <div>{{form.order}}</div>
-                    </form>
-                </div>
-
+        <div style="display:inline-block;">
+            <form id="form" method="get" style="border: none;">
+            {% csrf_token %}
+                {{form.order}}
+            </form>
+        </div>
     </footer>
 
 </body>
