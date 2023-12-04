@@ -35,7 +35,7 @@ def send_answer_author_email(**kwargs):
               from_email=settings.DEFAULT_FROM_EMAIL,
               recipient_list=[kwargs['request'].user.email],
               html_message=render_to_string(template_name, context, kwargs['request']),
-              fail_silently=False)
+              fail_silently=True)
 
 
 answer_author.connect(send_answer_author_email)
