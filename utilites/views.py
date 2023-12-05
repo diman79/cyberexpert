@@ -2,6 +2,7 @@ import mimetypes
 import os.path
 
 from django.core.files.storage import FileSystemStorage
+from django.forms import HiddenInput
 from django.shortcuts import render
 
 # Create your views here.
@@ -16,7 +17,7 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, FormView
-from .forms import FilterOrderBySearchForm, UtilitaForm
+from .forms import FilterOrderBySearchForm, UtilitaForm, UtilitaFormCreate
 from .models import *
 from logica.models import Statya
 from auth_app.models import User
@@ -75,7 +76,7 @@ class MainView(ListView, FormView):
 
 class UtilitaCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Utilita
-    form_class = UtilitaForm
+    form_class = UtilitaFormCreate
     template_name = 'create_utilita.html'
     permission_required = 'utilita.add_utilita',
     context_object_name = 'utilites'
@@ -97,11 +98,6 @@ class UtilitaCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView)
 
             utilita.author = author
 
-            if author.groups.filter(name='Администратор').exists():
-                active_user = True
-            else:
-                active_user = not utilita.ban_author
-
             rubriks = self.request.POST.getlist('rubrika')
 
             for item in rubriks:
@@ -118,11 +114,10 @@ class UtilitaCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView)
             utilita.file = file
 
             utilita.data_publication = datetime.now().date()
+            utilita.ban_author = False
+            utilita.moderated = False
             cache.delete('utilites')
             utilita.save()
-
-            author.is_active = active_user
-            author.save()
 
             return redirect(reverse('index_utilita'))
 
@@ -168,7 +163,7 @@ class UtilitaDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView)
 class UtilitaUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Utilita
     form_class = UtilitaForm
-    template_name = 'create.html'
+    template_name = 'create_utilita.html'
     pk_url_kwarg = 'utilita_id'
     permission_required = 'logica.change_utilita',
 

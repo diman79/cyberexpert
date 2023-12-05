@@ -13,14 +13,17 @@ set_ban = Signal()
 
 
 def setting_ban_user(sender, instance, **kwargs):
-
-    ban = instance.ban_author
-
-
-    print(instance.author)
     user = instance.author
-    user.is_active = ban
-    user.save()
+
+    if user is not None:
+        ban = instance.ban_author
+        if user.groups.filter(name='Администратор').exists():
+            active_user = True
+        else:
+            active_user = not ban
+
+        user.is_active = active_user
+        user.save()
 
 
-# pre_save.connect(setting_ban_user, sender=Utilita)
+post_save.connect(setting_ban_user, sender=Utilita)

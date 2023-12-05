@@ -14,9 +14,7 @@ class UtilitaForm(forms.ModelForm):
     description = forms.CharField(label='Описание', label_suffix=':',widget=Textarea(attrs={'placeholder': 'Опишите утилиту',
                                                          'rows': 20, 'cols': 35, }))
 
-    moderated = forms.BooleanField(required=False, label='Пройдена модерация', label_suffix=':')
-
-    ban_author = forms.BooleanField(required=False, label='Бан пользователя', label_suffix=':')
+    moderated = forms.BooleanField(required=True, label='Пройдена модерация', label_suffix=':')
 
     file = forms.FileField(required=True,  label='Файл', label_suffix=':', help_text='Выберите файл < 100 Мб')
 
@@ -25,7 +23,7 @@ class UtilitaForm(forms.ModelForm):
 
     class Meta:
         model = Utilita
-        fields = ('title', 'description', 'rubrika', 'file', )
+        fields = ('title', 'description', 'rubrika', 'file', 'ban_author', 'moderated', )
         labels = {'title': '', 'description': '', 'content': '', 'rubrika': '', 'kartinka': ''}
         widgets = {'title': TextInput(attrs={'placeholder': 'Введите название утилиты'}),
                    'description': Textarea(attrs={
@@ -48,10 +46,52 @@ class UtilitaForm(forms.ModelForm):
             return preview_data
 
 
+class UtilitaFormCreate(forms.ModelForm):
+    rubrika = forms.ModelMultipleChoiceField(queryset=Rubrika.objects.all(), widget=forms.CheckboxSelectMultiple,
+                                             required=True,
+                                             label='Рубрики',
+                                             label_suffix=':',
+                                             help_text='Укажите рубрики, к которым Вы хотите добавить утилиту!')
+
+    description = forms.CharField(label='Описание', label_suffix=':',widget=Textarea(attrs={'placeholder': 'Опишите утилиту',
+                                                         'rows': 20, 'cols': 35, }))
+
+    file = forms.FileField(required=True,  label='Файл', label_suffix=':', help_text='Выберите файл < 100 Мб')
+
+    error_css_class = 'error_field'
+    required_css_class = 'required_field'
+
+    class Meta:
+        model = Utilita
+        fields = ('title', 'description', 'rubrika', 'file', )
+        labels = {'title': '', 'description': '', 'content': '', 'rubrika': '', 'kartinka': ''}
+        widgets = {'title': TextInput(attrs={'placeholder': 'Введите название утилиты'}),
+                   'description': Textarea(attrs={
+                       'placeholder': 'Опишите описание утилиты',
+                       'rows': 20,
+                       'cols': 35}),
+                   }
+        exclude = ('ban_author', 'moderated', )
+        help_texts = {'description': 'Описание не должно быть пустым'}
+
+        def clean_preview(self):
+            preview_data = self.cleaned_data['description']
+            if len(preview_data) > 200:
+                raise ValidationError('Слишком длинное описание! Сократите до 200 символов')
+
+            preview_data = self.cleaned_data['content']
+            if len(preview_data) > 1000:
+                raise ValidationError('Слишком длинное содержание статьи! Сократите до 1000 символов')
+
+            return preview_data
+
+
 class FilterOrderBySearchForm(forms.Form):
     CHOICES = (
-        ('count_views', 'Сортировка по возрастанию скачиваний'),
-        ('-count_views', 'Сортировка по убыванию скачиваний'),
+        ('count_downloads', 'Сортировка по возрастанию скачиваний'),
+        ('-count_downloads', 'Сортировка по убыванию скачиваний'),
+        ('title', 'Сортировка по названию по возрастанию'),
+        ('-title', 'Сортировка по названию по убыванию'),
     )
 
     field_order = ['rub', 'search', ]
