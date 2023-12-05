@@ -24,6 +24,8 @@ class Utilita(models.Model):
 
     moderated = models.BooleanField(default=False, verbose_name='Проверено модератором')
 
+    ban_author = models.BooleanField(default=False, verbose_name='Бан юзера')
+
     def get_author(self):
         return self.author
 

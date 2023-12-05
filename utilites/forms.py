@@ -14,16 +14,18 @@ class UtilitaForm(forms.ModelForm):
     description = forms.CharField(label='Описание', label_suffix=':',widget=Textarea(attrs={'placeholder': 'Опишите утилиту',
                                                          'rows': 20, 'cols': 35, }))
 
-    moderated = forms.BooleanField(label='Пройдена модерация', label_suffix=':')
+    moderated = forms.BooleanField(required=False, label='Пройдена модерация', label_suffix=':')
 
-    file = forms.FileField()
+    ban_author = forms.BooleanField(required=False, label='Бан пользователя', label_suffix=':')
+
+    file = forms.FileField(required=True)
 
     error_css_class = 'error_field'
     required_css_class = 'required_field'
 
     class Meta:
         model = Utilita
-        fields = ('title', 'description', 'rubrika', 'file', 'moderated')
+        fields = ('title', 'description', 'rubrika', 'file', )
         labels = {'title': '', 'description': '', 'content': '', 'rubrika': '', 'kartinka': ''}
         widgets = {'title': TextInput(attrs={'placeholder': 'Введите название утилиты'}),
                    'description': Textarea(attrs={

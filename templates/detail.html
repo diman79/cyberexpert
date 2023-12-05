@@ -50,7 +50,13 @@
 
                                 <span style="font-size: 2em; font-weight: bold" >{{ review.author_comment.last_name }} {{ review.author_comment.first_name }} </span>
                                 <span style="font-size: 1.5em">{{ review.content }}</span>
-                                <p><a href="{% url 'answer_to_comment' review.pk %}">Ответ автора</a> </p>
+                                {% if user|has_group:'Автор' %}
+                                    {% if rewiew.author_comment == statya_var.author %}
+                                        <p><a href="{% url 'answer_to_comment' review.pk %}">Ответ автора</a> </p>
+                                    {% else %}
+                                        <p>Ответ автора</p>
+                                    {% endif %}
+                                {% endif %}
 
                                 <div class="review" style="border: dashed red" >
                                         {% for otvet in otvets %}
