@@ -1,4 +1,5 @@
 import mimetypes
+import os.path
 
 from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render
@@ -96,19 +97,33 @@ class UtilitaCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView)
 
             utilita.author = author
 
+            if author.groups.filter(name='Администратор').exists():
+                active_user = True
+            else:
+                active_user = not utilita.ban_author
+
             rubriks = self.request.POST.getlist('rubrika')
 
             for item in rubriks:
                 utilita.rubrika.add(item)
 
             file = self.request.FILES['file']
+
             fs = FileSystemStorage()
             filename = fs.save(file.name, file)
+
+            if file.size > (8 * 1024 * 1024 * 100):
+                os.remove(os.path.join(settings.MEDIA_ROOT, file.name))
+
             utilita.file = file
 
             utilita.data_publication = datetime.now().date()
             cache.delete('utilites')
             utilita.save()
+
+            author.is_active = active_user
+            author.save()
+
             return redirect(reverse('index_utilita'))
 
 

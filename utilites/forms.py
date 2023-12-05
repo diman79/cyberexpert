@@ -18,7 +18,7 @@ class UtilitaForm(forms.ModelForm):
 
     ban_author = forms.BooleanField(required=False, label='Бан пользователя', label_suffix=':')
 
-    file = forms.FileField(required=True)
+    file = forms.FileField(required=True,  label='Файл', label_suffix=':', help_text='Выберите файл < 100 Мб')
 
     error_css_class = 'error_field'
     required_css_class = 'required_field'
