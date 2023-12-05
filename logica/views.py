@@ -36,9 +36,11 @@ class MainView(ListView, FormView):
         rubriks = Rubrika.objects.all()
         data = super().get_context_data(**kwargs)
         data['rubriks'] = rubriks
+        data['all_statyas'] = MainView.queryset.count
         return data
 
     def get_queryset(self):
+        MainView.queryset = Statya.objects.all()
         if 'statyas' in cache:
             queryset = cache.get('statyas')
         else:
@@ -50,10 +52,10 @@ class MainView(ListView, FormView):
         order_by = self.request.GET.get('order', "count_views")
         filter1 = Q(title__icontains=search_query) | Q(description__icontains=search_query)
         queryset = MainView.queryset.filter(filter1).order_by(order_by)
-
+        MainView.queryset = queryset.filter(rubrika__naim=rub).order_by(order_by)
         # print('b=', rub)
 
-        return queryset.filter(rubrika__naim=rub).order_by(order_by)
+        return MainView.queryset
 
     def get_initial(self):
         initial = super(MainView, self).get_initial()

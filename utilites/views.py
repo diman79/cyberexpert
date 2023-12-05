@@ -37,7 +37,13 @@ class MainView(ListView, FormView):
 
     paginate_by = 4
 
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['all_utilites'] = MainView.queryset.count
+        return data
+
     def get_queryset(self):
+        MainView.queryset = Utilita.objects.all()
         user = self.request.user
         if user.groups.filter(name='Модератор').exists() or user.groups.filter(name='Администратор').exists():
             MainView.queryset = Utilita.objects.all()
@@ -56,7 +62,8 @@ class MainView(ListView, FormView):
         filter1 = Q(title__icontains=search_query) | Q(description__icontains=search_query)
         queryset = MainView.queryset.filter(filter1).order_by(order_by)
 
-        return queryset.filter(rubrika__naim=rub).order_by(order_by)
+        MainView.queryset = queryset.filter(rubrika__naim=rub).order_by(order_by)
+        return MainView.queryset
 
     def get(self, request, *args, **kwargs):
         user = self.request.user
