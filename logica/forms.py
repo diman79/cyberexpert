@@ -12,6 +12,7 @@ class StatyaForm(forms.ModelForm):
 
     description = forms.CharField(widget=Textarea(attrs={'placeholder': 'Опишите содержание статьи',
                                                          'rows': 20, 'cols': 35, }), label='')
+    kartinka = forms.ImageField(required=True)
 
     error_css_class = 'error_field'
     required_css_class = 'required_field'

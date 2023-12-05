@@ -125,3 +125,4 @@ class Answer_to_comment(models.Model):
     class Meta:
         verbose_name_plural = 'Ответы на комментарий'
         verbose_name = 'Ответ на комментарий'
+

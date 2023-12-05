@@ -21,8 +21,10 @@
                      {% if statya_var.kartinka %}
                             <img src="{{ statya_var.kartinka.url }}">
                      {% endif%}
-                    <p><b>Рейтинг автора:</b> {{ statya_var.reiting }}</p>
                     <p><b>Название статьи:</b> {{ statya_var.title }}</p>
+                    <p><b>Автор:</b> {{ statya_var.author }}</p>
+                    <p><b>Рейтинг автора:</b> {{ statya_var.reiting }}</p>
+
                     <p><b>Дата публикации:</b> {{ statya_var.data_publication }}</p>
                     <p><b>Описание:</b> {{ statya_var.description }}</p>
                     <p> <b>Контент:</b> <br> <textarea cols="150" rows="20">{{ statya_var.content }} </textarea></p>
@@ -31,11 +33,12 @@
                  </div>
              <div style="margin-bottom: 50px;">
                {% if user.is_authenticated %}
-                  <p style="font-weight: bold; margin-left: 5.5%">
-                        Отзывы
-                        <span style="font-weight: initial; font-size: .85em">{{ reviews.count }} </span>
-                        <a style="font-size: .8em" href="{% url 'comment_of_user' statya_var.pk %}">Оставить отзыв</a>
-                  </p>
+                 <span style="font-weight: initial; font-size: .85em">Отзывы {{ reviews.count }} </span>
+                 {% if user != statya_var.author %}
+                      <p style="font-weight: bold; margin-left: 5.5%">
+                            <a style="font-size: .8em" href="{% url 'comment_of_user' statya_var.pk %}">Оставить отзыв</a>
+                      </p>
+                 {% endif %}
 
                  <div class="reviews.container">
                         <div class="review">
@@ -51,7 +54,7 @@
                                 <span style="font-size: 2em; font-weight: bold" >{{ review.author_comment.last_name }} {{ review.author_comment.first_name }} </span>
                                 <span style="font-size: 1.5em">{{ review.content }}</span>
                                 {% if user|has_group:'Автор' %}
-                                    {% if rewiew.author_comment == statya_var.author %}
+                                    {% if user == statya_var.author %}
                                         <p><a href="{% url 'answer_to_comment' review.pk %}">Ответ автора</a> </p>
                                     {% else %}
                                         <p>Ответ автора</p>

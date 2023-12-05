@@ -22,8 +22,10 @@
                         </form>
                     </div>
                 {% endif %}
-                <p><b>Рейтинг автора:</b> {{ statya.reiting }}</p>
+
                 <p><b>Название статьи:</b> {{ statya.title }}</p>
+                <p><b>Автор:</b> {{ statya.author }}</p>
+                <p><b>Рейтинг автора:</b> {{ statya.reiting }}</p>
                 <p><b>Дата публикации:</b> {{ statya.data_publication|date:"d.m.Y"  }}</p>
                 <p><b>Описание статьи:</b> {{ statya.description|capfirst }}</p>
                 <p><b>Число просмотров:</b> {{ statya.count_views }}</p>

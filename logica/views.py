@@ -109,9 +109,10 @@ class StatyaCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
                 statya.rubrika.add(item)
 
             file = self.request.FILES['kartinka']
-            fs = FileSystemStorage()
-            filename = fs.save(file.name, file)
-            statya.file = file
+            if file != '':
+                fs = FileSystemStorage()
+                filename = fs.save(file.name, file)
+                statya.file = file
 
             statya.data_publication = datetime.now().date()
             cache.delete('statyas')
@@ -235,6 +236,9 @@ def ocenka_statya(request, statya_id):
         author = a.author
 
         bal = data['bal']
+
+        if author == request.user:
+            return HttpResponse("Нельзя оценивать свою статью.")
 
         if Ocenka.objects.filter(komu=author, author_ocenka=request.user, statya=a).exists():
             return HttpResponse("Вы уже оценивали эту статью.")

@@ -6,6 +6,7 @@ from django.contrib.auth.views import (LoginView, LogoutView, PasswordResetView,
 from .views import *
 from django.views.decorators.cache import cache_control
 
+
 urlpatterns = [
     path('', LogoutView.as_view(next_page='log_in'), name='log_in'),
     path('login/', cache_control(private=True)(UserLoginView.as_view()), name='log_in'),

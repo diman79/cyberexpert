@@ -1,6 +1,6 @@
 from django.conf import settings
-from django.contrib.auth.models import Group
-from django.db.models.signals import post_save
+from django.contrib.auth.models import User, Group
+from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver, Signal
 from django.utils import timezone
 from django.core.mail import EmailMessage
@@ -34,3 +34,4 @@ def grant_pupil_rights(sender, instance, created=True, **kwargs):
 
 
 account_access.connect(send_login_user_email)
+
