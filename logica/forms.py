@@ -13,8 +13,6 @@ class StatyaForm(forms.ModelForm):
     description = forms.CharField(widget=Textarea(attrs={'placeholder': 'Опишите содержание статьи',
                                                          'rows': 20, 'cols': 35, }), label='')
 
-    data_publication = forms.DateField(required=True, label='Дата публикации')
-
     error_css_class = 'error_field'
     required_css_class = 'required_field'
 
