@@ -23,7 +23,7 @@ class UtilitaForm(forms.ModelForm):
 
     class Meta:
         model = Utilita
-        fields = ('title', 'description', 'rubrika', 'file', 'ban_author', 'moderated', )
+        fields = ('title', 'description', 'rubrika', 'file', 'moderated', )
         labels = {'title': '', 'description': '', 'content': '', 'rubrika': '', 'kartinka': ''}
         widgets = {'title': TextInput(attrs={'placeholder': 'Введите название утилиты'}),
                    'description': Textarea(attrs={
