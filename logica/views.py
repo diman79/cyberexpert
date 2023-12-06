@@ -37,8 +37,7 @@ class MainView(ListView, FormView):
         rubriks = Rubrika.objects.all()
         data = super().get_context_data(**kwargs)
         data['rubriks'] = rubriks
-        data['all_statyas'] = MainView.queryset.count()
-        data['nm'] = 'Число статей в рубрике: '
+        data['nm'] = f'Число статей в рубрике: {MainView.queryset.count()}'
         return data
 
     def get_queryset(self):
@@ -195,12 +194,18 @@ class StatyaDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
 
 class StatyaUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Statya
-    form_class = StatyaForm
+
+    form_class = StatyaFormCreate
     template_name = 'create.html'
     pk_url_kwarg = 'statya_id'
     permission_required = 'logica.change_statya',
 
     def get_queryset(self):
+        if not self.request.user.groups.filter(name='Модератор').exists():
+            self.form_class = StatyaFormCreate
+        else:
+            self.form_class = StatyaForm
+
         return Statya.objects.filter(id=self.kwargs.get('statya_id'))
 
     def get_success_url(self):
@@ -288,8 +293,7 @@ class Moderate_view(MainView):
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
-        data['all_statyas'] = self.queryset2.count()
-        data['nm'] = 'Блок модерации. Число статей в рубрике для модерации: '
+        data['nm'] = f'Блок модерации. Число статей для модерации в рубрике: {MainView.queryset.count()}'
         return data
 
     def get_queryset(self):
@@ -302,5 +306,5 @@ class Moderate_view(MainView):
 
         queryset = queryset.filter(filter1).order_by(order_by)
         queryset = queryset.filter(rubrika__naim=rub).order_by(order_by)
-        queryset2 = queryset
+        MainView.queryset = queryset
         return queryset

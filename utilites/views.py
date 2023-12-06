@@ -39,7 +39,7 @@ class MainView(ListView, FormView):
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
-        data['all_utilites'] = MainView.queryset.count()
+        data['nm'] = f'Число утилит в рубрике: {MainView.queryset.count()}'
         return data
 
     def get_queryset(self):
@@ -171,6 +171,11 @@ class UtilitaUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView)
     permission_required = 'utilites.change_utilita',
 
     def get_queryset(self):
+        if not self.request.user.groups.filter(name='Модератор').exists():
+            self.form_class = UtilitaFormCreate
+        else:
+            self.form_class = UtilitaForm
+
         return Utilita.objects.filter(id=self.kwargs.get('utilita_id'))
 
     def get_success_url(self):
@@ -193,7 +198,7 @@ class Moderate_view(MainView):
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
-        data['all_utilites'] = f"Блок модерации. Утилит для модерации: {MainView.queryset.count()}"
+        data['nm'] = f'Блок модерации. Число статей для модерации в рубрике: {MainView.queryset.count()}'
         return data
 
     def get_queryset(self):
