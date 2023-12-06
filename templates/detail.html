@@ -62,10 +62,11 @@
                                 {% endif %}
 
                                 <div class="review" style="border: dashed red" >
+
                                         {% for otvet in otvets %}
-                                            {% if otvet.author_otveta == review.author_comment and otvet.comment.id == review.pk %}
+                                            {% if otvet.komu_answer == review.author_comment and review.id == otvet.comment.id %}
                                                 {% if otvet.author_otveta.avatar %}
-                                                    <img src="{{ review.user.avatar.url }}">
+                                                    <img src="{{ otvet.author_otveta.avatar.url }}">
                                                 {% else %}
                                                     <img src="{% static 'avatar.png' %}">
                                                 {% endif %}
@@ -73,6 +74,7 @@
                                                 <span style="font-size: 2em; font-weight: bold" >{{ otvet.author_otveta.last_name }} {{ otvet.author_otveta.first_name }} (автор): </span>
                                                 <span style="font-size: 1.5em">{{ otvet.content }}</span>
                                                 <br>
+
                                             {% endif %}
                                         {% empty %}
                                             {% if user|has_group:'Автор' %}
