@@ -252,14 +252,14 @@ def ocenka_statya(request, statya_id):
             r.bal = bal
             r.save()
 
-            c = Ocenka.objects.filter(komu=author).aggregate(bals_all=Sum("bal"))
-            d = Ocenka.objects.filter(komu=author).count()
-            print('bals_all', c['bals_all'])
-            print('count', d)
-            reiting = round(c['bals_all'] / d, 2)
-            print(reiting)
-            Statya.objects.filter(author=author).update(reiting=reiting)
-
+            # c = Ocenka.objects.filter(komu=author).aggregate(bals_all=Sum("bal"))
+            # d = Ocenka.objects.filter(komu=author).count()
+            # print('bals_all', c['bals_all'])
+            # print('count', d)
+            # reiting = round(c['bals_all'] / d, 2)
+            # print(reiting)
+            # Statya.objects.filter(author=author).update(reiting=reiting)
+            a.save()
             return redirect(reverse('detail', kwargs={'statya_id': statya_id}))
     else:
         return render(request, 'ocenka.html')

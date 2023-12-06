@@ -4,7 +4,7 @@
 {% block content  %}
 <div class="course_container" xmlns="http://www.w3.org/1999/html">
                 {% with utilita_var=utilites.first %}
-                 <div class="course_preview" style="transform: none; box-shadow: none; border: none">
+                 <div class="course_preview" style="margin-bottom: 50px; transform: none; box-shadow: none; border: none">
 
                      {% if user.is_authenticated %}
                         {% if user|has_group:'Автор' %}

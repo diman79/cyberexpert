@@ -14,7 +14,7 @@ class UtilitaForm(forms.ModelForm):
     description = forms.CharField(label='Описание', label_suffix=':',widget=Textarea(attrs={'placeholder': 'Опишите утилиту',
                                                          'rows': 20, 'cols': 35, }))
 
-    moderated = forms.BooleanField(required=True, label='Пройдена модерация', label_suffix=':')
+    moderated = forms.BooleanField(required=False, label='Пройдена модерация', label_suffix=':')
 
     file = forms.FileField(required=True,  label='Файл', label_suffix=':', help_text='Выберите файл < 100 Мб')
 
@@ -54,7 +54,7 @@ class UtilitaFormCreate(forms.ModelForm):
                                              help_text='Укажите рубрики, к которым Вы хотите добавить утилиту!')
 
     description = forms.CharField(label='Описание', label_suffix=':',widget=Textarea(attrs={'placeholder': 'Опишите утилиту',
-                                                         'rows': 20, 'cols': 35, }))
+                                                         'rows': 5, 'cols': 35, }))
 
     file = forms.FileField(required=True,  label='Файл', label_suffix=':', help_text='Выберите файл < 100 Мб')
 

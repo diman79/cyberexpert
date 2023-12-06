@@ -10,8 +10,7 @@ class StatyaForm(forms.ModelForm):
                                              label='Рубрики',
                                              help_text='Укажите рубрики, к которым Вы хотите добавить статью!')
 
-    description = forms.CharField(widget=Textarea(attrs={'placeholder': 'Опишите содержание статьи',
-                                                         'rows': 20, 'cols': 35, }), label='')
+    description = forms.Textarea()
     kartinka = forms.ImageField(required=True)
 
     error_css_class = 'error_field'
@@ -19,12 +18,12 @@ class StatyaForm(forms.ModelForm):
 
     class Meta:
         model = Statya
-        fields = ('title', 'description', 'content', 'kartinka', )
-        labels = {'title': '', 'description': '', 'content': '', 'rubrika': '', 'kartinka': ''}
+        fields = ('title', 'description', 'content', 'kartinka', 'rubrika')
+        labels = {'title': 'Название', 'description': 'Описание', 'content': 'Контент', 'rubrika': 'Рубрика', 'kartinka': 'Логотип статьи'}
         widgets = {'title': TextInput(attrs={'placeholder': 'Введите название статьи'}),
                    'description': Textarea(attrs={
                        'placeholder': 'Опишите содержание статьи',
-                       'rows': 20,
+                       'rows': 5,
                        'cols': 35}),
                    'content': Textarea(attrs={
                        'placeholder': 'Укажите содержание статьи',

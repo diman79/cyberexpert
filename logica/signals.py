@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.core.mail import send_mail, EmailMultiAlternatives, get_connection, EmailMessage
+from django.db.models import Sum
 
 from .models import *
 from django.db.models.signals import pre_save, post_save
@@ -11,7 +12,7 @@ from django.conf import settings
 from django.core.mail import send_mail, EmailMultiAlternatives, get_connection, EmailMessage
 
 from .models import Statya, Comment, Answer_to_comment
-from django.db.models.signals import pre_save, post_save
+from django.db.models.signals import pre_save, post_save, post_delete, pre_init
 from django.dispatch import Signal, receiver
 from django.template.loader import render_to_string
 from django.contrib.auth import get_user_model
@@ -39,3 +40,19 @@ def send_answer_author_email(**kwargs):
 
 
 answer_author.connect(send_answer_author_email)
+
+
+def update_reiting(sender, instance, **kwargs):
+    statya = instance
+    author = statya.author
+    if author is not None:
+        print(author)
+        c = Ocenka.objects.filter(komu=author).aggregate(bals_all=Sum("bal"))
+        d = Ocenka.objects.filter(komu=author).count()
+        print('bals_all', c['bals_all'])
+        print('count', d)
+        reiting = round(c['bals_all'] / d, 2)
+        Statya.objects.filter(author=author).update(reiting=reiting)
+
+
+post_save.connect(update_reiting, sender=Statya)
