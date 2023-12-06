@@ -1,3 +1,4 @@
+from django.core.checks import messages
 from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render
 
@@ -171,6 +172,11 @@ class StatyaDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     def form_valid(self, form):
         statya_id = self.kwargs.get('statya_id')
         cache.delete_many(['courses', f"statya_{statya_id}"])
+
+        a = Statya.objects.get(id=self.kwargs.get('statya_id'))
+        if a.author != self.request.user:
+            return HttpResponse("Нельзя удалять чужую статью.")
+
         return super(StatyaDeleteView, self).form_valid(form)
 
     def get_queryset(self):
@@ -192,6 +198,13 @@ class StatyaUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse('detail', kwargs={'statya_id': self.object.id})
+
+    def form_valid(self, form):
+        a = Statya.objects.get(id=self.kwargs.get('statya_id'))
+        if a.author!=self.request.user:
+            return HttpResponse("Нельзя редактировать чужую статью.")
+
+        return super(StatyaUpdateView, self).form_valid(form)
 
 
 @transaction.non_atomic_requests
@@ -238,6 +251,9 @@ def ocenka_statya(request, statya_id):
         author = a.author
 
         bal = data['bal']
+
+        if request.user.groups.filter(name='Модератор').exists():
+            return HttpResponse("Модератор не может оценивать статьи.")
 
         if author == request.user:
             return HttpResponse("Нельзя оценивать свою статью.")

@@ -157,6 +157,12 @@ class UtilitaDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView)
 
     def form_valid(self, form):
         utilita_id = self.kwargs.get('utilita_id')
+
+        a = Utilita.objects.get(id=self.kwargs.get('utilita_id'))
+        if not self.request.user.groups.filter(name='Модератор').exists():
+            if a.author != self.request.user:
+                return HttpResponse("Нельзя удалять чужую утилиту.")
+
         cache.delete_many(['utilites', f"utilita_{utilita_id}"])
         return super(UtilitaDeleteView, self).form_valid(form)
 

@@ -46,11 +46,11 @@ def update_reiting(sender, instance, **kwargs):
     statya = instance
     author = statya.author
     if author is not None:
-        print(author)
+        # print(author)
         c = Ocenka.objects.filter(komu=author).aggregate(bals_all=Sum("bal"))
         d = Ocenka.objects.filter(komu=author).count()
-        print('bals_all', c['bals_all'])
-        print('count', d)
+        # print('bals_all', c['bals_all'])
+        # print('count', d)
         reiting = round(c['bals_all'] / d, 2)
         Statya.objects.filter(author=author).update(reiting=reiting)
 
