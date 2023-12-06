@@ -85,7 +85,7 @@ class UtilitaCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView)
     model = Utilita
     form_class = UtilitaFormCreate
     template_name = 'create_utilita.html'
-    permission_required = 'utilita.add_utilita',
+    permission_required = 'utilites.add_utilita',
     context_object_name = 'utilites'
 
     def form_valid(self, form):
@@ -172,7 +172,7 @@ class UtilitaUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView)
     form_class = UtilitaForm
     template_name = 'create_utilita.html'
     pk_url_kwarg = 'utilita_id'
-    permission_required = 'logica.change_utilita',
+    permission_required = 'utilites.change_utilita',
 
     def get_queryset(self):
         return Utilita.objects.filter(id=self.kwargs.get('utilita_id'))
