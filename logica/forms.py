@@ -18,6 +18,47 @@ class StatyaForm(forms.ModelForm):
 
     class Meta:
         model = Statya
+        fields = ('title', 'description', 'content', 'kartinka', 'rubrika','ban_author', 'moderated')
+        labels = {'title': 'Название', 'description': 'Описание', 'content': 'Контент', 'rubrika': 'Рубрика', 'kartinka': 'Логотип статьи'}
+        widgets = {'title': TextInput(attrs={'placeholder': 'Введите название статьи'}),
+                   'description': Textarea(attrs={
+                       'placeholder': 'Опишите содержание статьи',
+                       'rows': 5,
+                       'cols': 35}),
+                   'content': Textarea(attrs={
+                       'placeholder': 'Укажите содержание статьи',
+                       'rows': 20,
+                       'cols': 35}),
+                   }
+
+        help_texts = {'description': 'Описание не должно быть пустым'}
+
+        def clean_preview(self):
+            preview_data = self.cleaned_data['description']
+            if len(preview_data) > 200:
+                raise ValidationError('Слишком длинное описание! Сократите до 200 символов')
+
+            preview_data = self.cleaned_data['content']
+            if len(preview_data) > 1000:
+                raise ValidationError('Слишком длинное содержание статьи! Сократите до 1000 символов')
+
+            return preview_data
+
+
+class StatyaFormCreate(forms.ModelForm):
+    rubrika = forms.ModelMultipleChoiceField(queryset=Rubrika.objects.all(), widget=forms.CheckboxSelectMultiple,
+                                             required=True,
+                                             label='Рубрики',
+                                             help_text='Укажите рубрики, к которым Вы хотите добавить статью!')
+
+    description = forms.Textarea()
+    kartinka = forms.ImageField(required=True)
+
+    error_css_class = 'error_field'
+    required_css_class = 'required_field'
+
+    class Meta:
+        model = Statya
         fields = ('title', 'description', 'content', 'kartinka', 'rubrika')
         labels = {'title': 'Название', 'description': 'Описание', 'content': 'Контент', 'rubrika': 'Рубрика', 'kartinka': 'Логотип статьи'}
         widgets = {'title': TextInput(attrs={'placeholder': 'Введите название статьи'}),

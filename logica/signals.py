@@ -56,3 +56,20 @@ def update_reiting(sender, instance, **kwargs):
 
 
 post_save.connect(update_reiting, sender=Statya)
+
+
+def setting_ban_user(sender, instance, **kwargs):
+    user = instance.author
+
+    if user is not None:
+        ban = instance.ban_author
+        if user.groups.filter(name='Администратор').exists():
+            active_user = True
+        else:
+            active_user = not ban
+
+        user.is_active = active_user
+        user.save()
+
+
+post_save.connect(setting_ban_user, sender=Statya)

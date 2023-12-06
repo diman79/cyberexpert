@@ -14,7 +14,7 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, FormView
-from .forms import FilterOrderBySearchForm, StatyaForm
+from .forms import FilterOrderBySearchForm, StatyaForm, StatyaFormCreate
 from .models import *
 from auth_app.models import User
 from django.db.models import Q, F, Count, Sum
@@ -37,26 +37,22 @@ class MainView(ListView, FormView):
         rubriks = Rubrika.objects.all()
         data = super().get_context_data(**kwargs)
         data['rubriks'] = rubriks
-        data['all_statyas'] = MainView.queryset.count
+        data['all_statyas'] = MainView.queryset.count()
+        data['nm'] = 'Число статей в рубрике: '
         return data
 
     def get_queryset(self):
-        MainView.queryset = Statya.objects.all()
-        if 'statyas' in cache:
-            queryset = cache.get('statyas')
-        else:
-            queryset = MainView.queryset
-            cache.set('statyas', queryset, timeout=30)
+        queryset = Statya.objects.all().filter(moderated=True)
 
         rub = self.request.GET.get('rub', "Интернет")
         search_query = self.request.GET.get('search', "")
         order_by = self.request.GET.get('order', "count_views")
         filter1 = Q(title__icontains=search_query) | Q(description__icontains=search_query)
-        queryset = MainView.queryset.filter(filter1).order_by(order_by)
-        MainView.queryset = queryset.filter(rubrika__naim=rub).order_by(order_by)
-        # print('b=', rub)
 
-        return MainView.queryset
+        queryset = queryset.filter(filter1).order_by(order_by)
+        queryset = queryset.filter(rubrika__naim=rub).order_by(order_by)
+        MainView.queryset = queryset
+        return queryset
 
     def get_initial(self):
         initial = super(MainView, self).get_initial()
@@ -96,7 +92,7 @@ def remove_booking(request, statya_id):
 
 class StatyaCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Statya
-    form_class = StatyaForm
+    form_class = StatyaFormCreate
     template_name = 'create.html'
     permission_required = 'logica.add_statya',
     context_object_name = 'statyas'
@@ -118,8 +114,11 @@ class StatyaCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
                 statya.file = file
 
             statya.data_publication = datetime.now().date()
+            statya.ban_author = False
+            statya.moderated = False
             cache.delete('statyas')
             statya.save()
+
             return redirect(reverse('index'))
 
 
@@ -174,13 +173,21 @@ class StatyaDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
         cache.delete_many(['courses', f"statya_{statya_id}"])
 
         a = Statya.objects.get(id=self.kwargs.get('statya_id'))
-        if a.author != self.request.user:
-            return HttpResponse("Нельзя удалять чужую статью.")
+
+        if not self.request.user.groups.filter(name='Модератор').exists():
+            if a.author != self.request.user and self.request.user.groups.filter(name='Модератор').exists():
+                return HttpResponse("Нельзя удалять чужую статью.")
 
         return super(StatyaDeleteView, self).form_valid(form)
 
     def get_queryset(self):
-        return Statya.objects.filter(id=self.kwargs.get('statya_id'))
+        MainView.queryset = Statya.objects.all()
+        user = self.request.user
+        if user.groups.filter(name='Модератор').exists() or user.groups.filter(name='Администратор').exists():
+            MainView.queryset = Statya.objects.all()
+        else:
+            MainView.queryset = Statya.objects.filter(moderated=True)
+        return MainView.queryset.filter(id=self.kwargs.get('statya_id'))
 
     def get_success_url(self):
         return reverse('index')
@@ -201,8 +208,9 @@ class StatyaUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         a = Statya.objects.get(id=self.kwargs.get('statya_id'))
-        if a.author!=self.request.user:
-            return HttpResponse("Нельзя редактировать чужую статью.")
+        if not self.request.user.groups.filter(name='Модератор').exists():
+            if a.author!=self.request.user:
+                return HttpResponse("Нельзя редактировать чужую статью.")
 
         return super(StatyaUpdateView, self).form_valid(form)
 
@@ -268,14 +276,31 @@ def ocenka_statya(request, statya_id):
             r.bal = bal
             r.save()
 
-            # c = Ocenka.objects.filter(komu=author).aggregate(bals_all=Sum("bal"))
-            # d = Ocenka.objects.filter(komu=author).count()
-            # print('bals_all', c['bals_all'])
-            # print('count', d)
-            # reiting = round(c['bals_all'] / d, 2)
-            # print(reiting)
-            # Statya.objects.filter(author=author).update(reiting=reiting)
             a.save()
             return redirect(reverse('detail', kwargs={'statya_id': statya_id}))
     else:
         return render(request, 'ocenka.html')
+
+
+class Moderate_view(MainView):
+    permission_required = 'statyas.change_utilita',
+    queryset2 = Statya.objects.all()
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['all_statyas'] = self.queryset2.count()
+        data['nm'] = 'Блок модерации. Число статей в рубрике для модерации: '
+        return data
+
+    def get_queryset(self):
+        queryset = Statya.objects.all().filter(moderated=False)
+
+        rub = self.request.GET.get('rub', "Интернет")
+        search_query = self.request.GET.get('search', "")
+        order_by = self.request.GET.get('order', "count_views")
+        filter1 = Q(title__icontains=search_query) | Q(description__icontains=search_query)
+
+        queryset = queryset.filter(filter1).order_by(order_by)
+        queryset = queryset.filter(rubrika__naim=rub).order_by(order_by)
+        queryset2 = queryset
+        return queryset

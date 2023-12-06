@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content  %}
-    <h5>Количество статей в рубрике: {{ all_statyas }}</h5>
+    <h5>{{nm}} {{ all_statyas }}</h5>
     <div class="courses_container">
         {% for statya in statyas %}
             <div class="course_preview">

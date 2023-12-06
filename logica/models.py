@@ -45,6 +45,10 @@ class Statya(models.Model):
 
     reiting = models.FloatField(verbose_name='Рейтинг', default=0)
 
+    moderated = models.BooleanField(default=False, verbose_name='Проверено модератором')
+
+    ban_author = models.BooleanField(default=False, verbose_name='Бан юзера')
+
     def get_author(self):
         return self.author
 

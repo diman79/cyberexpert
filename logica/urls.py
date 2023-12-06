@@ -4,6 +4,7 @@ from .views import *
 
 urlpatterns = [
     path('', MainView.as_view(), name='index'),
+    path('moderate_statya', Moderate_view.as_view(), name='moderate_statya'),
     path('create/', StatyaCreateView.as_view(), name='create'),
     path('delete/<int:statya_id>/', StatyaDeleteView.as_view(), name='delete'),
     path('detail/<statya_id>/', cache_control(max_age=600)(StatyaDetailView.as_view()), name='detail'),

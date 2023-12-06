@@ -39,31 +39,21 @@ class MainView(ListView, FormView):
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
-        data['all_utilites'] = MainView.queryset.count
+        data['all_utilites'] = MainView.queryset.count()
         return data
 
     def get_queryset(self):
-        MainView.queryset = Utilita.objects.all()
-        user = self.request.user
-        if user.groups.filter(name='Модератор').exists() or user.groups.filter(name='Администратор').exists():
-            MainView.queryset = Utilita.objects.all()
-        else:
-            MainView.queryset = Utilita.objects.filter(moderated=True)
-
-        if 'utilites' in cache:
-            queryset = cache.get('utilites')
-        else:
-            queryset = MainView.queryset
-            cache.set('utilites', queryset, timeout=30)
+        queryset = Utilita.objects.all().filter(moderated=True)
 
         rub = self.request.GET.get('rub', "Интернет")
         search_query = self.request.GET.get('search', "")
         order_by = self.request.GET.get('order', "count_downloads")
         filter1 = Q(title__icontains=search_query) | Q(description__icontains=search_query)
-        queryset = MainView.queryset.filter(filter1).order_by(order_by)
 
-        MainView.queryset = queryset.filter(rubrika__naim=rub).order_by(order_by)
-        return MainView.queryset
+        queryset = queryset.filter(filter1).order_by(order_by)
+        queryset = queryset.filter(rubrika__naim=rub).order_by(order_by)
+        MainView.queryset = queryset
+        return queryset
 
     def get(self, request, *args, **kwargs):
         user = self.request.user
@@ -73,7 +63,7 @@ class MainView(ListView, FormView):
     def get_initial(self):
         initial = super(MainView, self).get_initial()
         initial['search'] = self.request.GET.get('search', '')
-        initial['order'] = self.request.GET.get('order', "count_views")
+        initial['order'] = self.request.GET.get('order', "count_downloads")
         initial['rub'] = self.request.GET.get('rub', "Интернет")
         return initial
 
@@ -201,9 +191,24 @@ def download_utilita(request, utilita_id):
 class Moderate_view(MainView):
     permission_required = 'utilites.change_utilita',
 
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['all_utilites'] = f"Блок модерации. Утилит для модерации: {MainView.queryset.count()}"
+        return data
+
     def get_queryset(self):
-        queryset = super(Moderate_view, self).get_queryset()
-        return queryset.filter(moderated=False)
+        queryset = Utilita.objects.all().filter(moderated=False)
+
+        rub = self.request.GET.get('rub', "Интернет")
+        search_query = self.request.GET.get('search', "")
+        order_by = self.request.GET.get('order', "count_downloads")
+        filter1 = Q(title__icontains=search_query) | Q(description__icontains=search_query)
+
+        queryset = queryset.filter(filter1).order_by(order_by)
+        queryset = queryset.filter(rubrika__naim=rub).order_by(order_by)
+        MainView.queryset = queryset
+        return queryset
+
 
 
 

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+{% load templates_tag %}
 
 
 
@@ -64,6 +65,11 @@
                                <p><a class="fa fa-heart" href="{% url 'favourites' %}"> Статьи для чтения</a></p>
 
                                 <p><a style="color: rgba(238, 68, 68, 0.83)" href="{% url 'create' %}">Создать статью</a></p>
+
+                                {% if user|has_group:'Модератор' %}
+                                    <p><a style="color: rgba(238, 68, 68, 0.83)" href="{% url 'moderate_statya' %}">Модерация загруженных статей</a></p>
+                                {% endif %}
+
 
                                 <p><a style="color: rgba(238, 68, 68, 0.83)" href="{% url 'password_change' %}"> Сменить пароль</a></p>
 
