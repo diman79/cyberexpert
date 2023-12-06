@@ -198,7 +198,7 @@ class Moderate_view(MainView):
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
-        data['nm'] = f'Блок модерации. Число статей для модерации в рубрике: {MainView.queryset.count()}'
+        data['nm'] = f'Блок модерации. Число утилит для модерации в рубрике: {MainView.queryset.count()}'
         return data
 
     def get_queryset(self):
